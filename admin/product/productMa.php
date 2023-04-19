@@ -85,10 +85,9 @@ $resultNameCategory = mysqli_query($conn, $selectCategory);
                             <label for="exampleInputName" class="form-label text-left">Giá</label>
                             <input type="text" class="form-control" id="exampleInputName" placeholder="Nhập giá..." name="price">
                         </div>
-
                         <div class="mt-2">
                             <label for="exampleInputName" class="form-label text-left">Danh mục</label>
-                            <select class="form-select form-select-sm" aria-label=".form-select-sm example">
+                            <select class="form-select form-select" aria-label=".form-select-sm example" name="id_category">
                                 <option value="default" checked>Chọn danh mục...</option>
                                 <?php while ($categoryName = mysqli_fetch_assoc($resultNameCategory)) : ?>
                                     <option value="<?php echo $categoryName['id'] ?>"><?php echo $categoryName['name'] ?></option>
