@@ -23,7 +23,7 @@ $result = mysqli_query($conn, $sqlSelect);
             <button type="button" class="btn btn-success mt-3 mb-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                 Thêm danh mục
             </button>
-            <a class="btn btn-primary text-white" href="../product/productMa.php" id="link-quan-ly-san-pham">Quản lí sản phẩm -></a>
+            <a class="btn btn-primary text-white" href="../product/productMa.php" id="link-quan-ly-san-pham">Quản lý sản phẩm -></a>
         </div>
 
         <table class="table border">
@@ -65,15 +65,15 @@ $result = mysqli_query($conn, $sqlSelect);
                 <div class="modal-body">
                     <form method="post" action="insert.php">
                         <div class="mt-4">
-                            <label for="exampleInputName" class="form-label text-left">Họ tên</label>
+                            <label for="exampleInputName" class="form-label text-left">Tên danh mục</label>
                             <input type="text" class="form-control" id="exampleInputName" placeholder="Nhập tên danh mục..." name="name">
                         </div>
                         <div class="mb-2">
-                            <label for="exampleInputClass" class="form-label">Lớp</label>
+                            <label for="exampleInputClass" class="form-label">Ngày tạo</label>
                             <input type="datetime-local" class="form-control" id="exampleInputClass" placeholder="Ngày tạo..." name="created_at">
                         </div>
                         <div class="mb-2">
-                            <label for="exampleInputQue" class="form-label">Quê quán</label>
+                            <label for="exampleInputQue" class="form-label">Ngày cập nhập</label>
                             <input type="datetime-local" class="form-control" id="exampleInputQue" placeholder="Ngày update..." name="updated_at">
                         </div>
 

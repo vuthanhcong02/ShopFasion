@@ -2,7 +2,7 @@
 $id=$_GET['id'];
 require_once '../../connectDB.php';
 $selectCategory = "SELECT *FROM category";
-$sqlSelect = "SELECT * FROM products JOIN category ON products.id_category=category.id WHERE products.id=$id" ;
+$sqlSelect = "SELECT products.id,products.title,products.thumbnail,products.price,products.decription,id_category,products.updated_at FROM products JOIN category ON products.id_category=category.id WHERE products.id=$id" ;
 $result = mysqli_query($conn, $sqlSelect);
 $row=mysqli_fetch_assoc($result);
 $resultNameCategory = mysqli_query($conn, $selectCategory);
@@ -18,14 +18,15 @@ $resultNameCategory = mysqli_query($conn, $selectCategory);
 <body>
 <div class="container">
     <h5 class="mt-4 mb-3">Thông tin sản phẩm</h5>
-    <form method="post" action="update.php">
+    <form method="post" action="update.php?id=<?php echo $row['id']?>">
                             <div class="mt-4">
                                 <label for="exampleInputName" class="form-label text-left">Tên sản phẩm</label>
                                 <input type="text" class="form-control" id="exampleInputName" placeholder="Nhập tên sản phẩm..." name="title" value="<?php echo $row['title']?>">
                             </div>
                             <div class="mt-2">
-                                <label for="exampleInputName" class="form-label text-left">Ảnh</label>
-                                <input type="text" class="form-control" id="exampleInputName" placeholder="Chọn ảnh..." name="thumbnail" value="<?php echo $row['thumbnail']?>">
+                                <label for="thumbnail" class="form-label text-left">Ảnh</label>
+                                <input type="file" class="form-control" id="thumnail" placeholder="Chọn ảnh..." name="thumbnail" value="<?php echo $row['thumbnail']?>">
+                                <img class="mt-2" src="img/<?php echo $row['thumbnail']?>" width="250px" id="img_thumbnail"/>
                             </div>
                             <div class="mt-2">
                                 <label for="exampleInputName" class="form-label text-left">Giá</label>
@@ -44,7 +45,6 @@ $resultNameCategory = mysqli_query($conn, $selectCategory);
                                             echo '<option value="'.$categoryName['id'].'">'.$categoryName['name'].'.</option>';
                                         }  
                                         ?>
-                                       
                                     <?php endwhile; ?>
     
                                 </select>
@@ -59,8 +59,27 @@ $resultNameCategory = mysqli_query($conn, $selectCategory);
                             </div>
     
                             <br>
-                            <button type="submit" class="btn btn-success mt-4 mb-3">Thêm danh mục</button>
+                           <div class="d-flex justify-content-between">
+                                <button type="submit" class="btn btn-success mt-3 mb-3">Lưu</button>
+                                <a type="submit" href="productMa.php" class="btn btn-primary mt-3 mb-3"><--Quay lại</a>
+                           </div>
                         </form>
 </div>
                     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-</body>
+
+    <script>
+            const input = document.querySelector('input[type="file"]');
+            input.addEventListener('change', function() {
+            // Đọc file hình ảnh được chọn
+            const file = this.files[0];
+            const reader = new FileReader();
+            reader.addEventListener('load', function() {
+               // Hiển thị hình ảnh được chọn
+               const img = document.getElementById('img_thumbnail');
+               img.src = reader.result;  
+            });
+            reader.readAsDataURL(file);
+         });
+    </script>
+
+    </body>

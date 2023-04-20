@@ -38,7 +38,7 @@ $row = mysqli_fetch_assoc($result);
             </div>
             <div class="mb-2">
                 <label for="exampleInputQue" class="form-label">Ngày cập nhập</label>
-                <input type="datetime-local" class="form-control" id="exampleInputQue" placeholder="Ngày update..." name="updated_at" value="<?php echo $row['created_at'] ?>">
+                <input type="datetime-local" class="form-control" id="exampleInputQue" placeholder="Ngày update..." name="updated_at" value="<?php echo $row['updated_at'] ?>">
             </div>
 
             <br>

@@ -20,12 +20,12 @@ $resultNameCategory = mysqli_query($conn, $selectCategory);
 <body>
     <div class="container">
 
-        <h5 class="mt-4 mb-3">Thông tin danh mục</h5>
+        <h5 class="mt-4 mb-3">Thông tin Sản phẩm</h5>
         <div class="d-flex justify-content-between align-items-center">
             <button type="button" class="btn btn-success mt-3 mb-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                 Thêm sản phẩm
             </button>
-            <a class="btn btn-primary text-white" href="../category/categoryMa.php" id="link-quan-ly-san-pham"><-Thông tin danh mục</a>
+            <a class="btn btn-primary text-white" href="../category/categoryMa.php" id="link-quan-ly-san-pham"><-Quản lí danh mục</a>
         </div>
 
         <table class="table border">
@@ -47,7 +47,7 @@ $resultNameCategory = mysqli_query($conn, $selectCategory);
                     <tr>
                         <td class="text-center"><?php echo ($row['id']); ?></td>
                         <td class="text-center"><?php echo ($row['title']); ?></td>
-                        <td class="text-center"><img src="<?php echo ($row['thumbnail']); ?>" width="100px" /></td>
+                        <td class="text-center"><img src="img/<?php echo ($row['thumbnail']); ?>" width="100px" /></td>
                         <td class="text-center"><?php echo ($row['price']); ?></td>
                         <td class="text-center"><?php echo ($row['categoryname']); ?></td>
                         <td class="text-center"><?php echo ($row['decription']); ?></td>
@@ -72,15 +72,16 @@ $resultNameCategory = mysqli_query($conn, $selectCategory);
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form method="post" action="insert.php">
+                    <form method="post" action="insert.php" enctype="multipart/form-data">
                         <div class="mt-4">
                             <label for="exampleInputName" class="form-label text-left">Tên sản phẩm</label>
                             <input type="text" class="form-control" id="exampleInputName" placeholder="Nhập tên sản phẩm..." name="title">
                         </div>
                         <div class="mt-2">
-                            <label for="exampleInputName" class="form-label text-left">Ảnh</label>
-                            <input type="text" class="form-control" id="exampleInputName" placeholder="Chọn ảnh..." name="thumbnail">
-                        </div>
+                                <label for="thumbnail" class="form-label text-left">Ảnh</label>
+                                <input type="file" class="form-control" id="thumbnail" placeholder="Chọn ảnh..." name="thumbnail" value="<?php echo $row['thumbnail']?>">
+                                <img class="mt-2" src="<?php echo $row['thumbnail']?>" width="250px" id="img_thumbnail"/>
+                            </div>
                         <div class="mt-2">
                             <label for="exampleInputName" class="form-label text-left">Giá</label>
                             <input type="text" class="form-control" id="exampleInputName" placeholder="Nhập giá..." name="price">
@@ -105,11 +106,25 @@ $resultNameCategory = mysqli_query($conn, $selectCategory);
                         </div>
 
                         <br>
-                        <button type="submit" class="btn btn-success mt-4 mb-3">Thêm danh mục</button>
+                        <button type="submit" class="btn btn-success mt-4 mb-3">Thêm Sản phẩm</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script>
+        const input = document.querySelector('input[type="file"]');
+        input.addEventListener('change', function() {
+            // Đọc file hình ảnh được chọn
+            const file = this.files[0];
+            const reader = new FileReader();
+            reader.addEventListener('load', function() {
+                // Hiển thị hình ảnh được chọn
+                const img = document.getElementById('img_thumbnail');
+                img.src = reader.result;
+            });
+            reader.readAsDataURL(file);
+        });
+    </script>
 </body>
