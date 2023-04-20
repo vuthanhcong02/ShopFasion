@@ -18,7 +18,7 @@ $resultNameCategory = mysqli_query($conn, $selectCategory);
 <body>
 <div class="container">
     <h5 class="mt-4 mb-3">Thông tin sản phẩm</h5>
-    <form method="post" action="update.php?id=<?php echo $row['id']?>">
+    <form method="post" action="update.php?id=<?php echo $row['id']?>" enctype="multipart/form-data">
                             <div class="mt-4">
                                 <label for="exampleInputName" class="form-label text-left">Tên sản phẩm</label>
                                 <input type="text" class="form-control" id="exampleInputName" placeholder="Nhập tên sản phẩm..." name="title" value="<?php echo $row['title']?>">

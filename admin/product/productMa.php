@@ -47,11 +47,11 @@ $resultNameCategory = mysqli_query($conn, $selectCategory);
                     <tr>
                         <td class="text-center"><?php echo ($row['id']); ?></td>
                         <td class="text-center"><?php echo ($row['title']); ?></td>
-                        <td class="text-center"><img src="img/<?php echo ($row['thumbnail']); ?>" width="100px" /></td>
+                        <td class="text-center"><img src="img/<?php echo ($row['thumbnail']); ?>" width="100px" height="130px" style="object-fit: cover;object-position: center;"/></td>
                         <td class="text-center"><?php echo ($row['price']); ?></td>
                         <td class="text-center"><?php echo ($row['categoryname']); ?></td>
                         <td class="text-center"><?php echo ($row['decription']); ?></td>
-                        <td class="text-center"><?php echo ($row['updated_at']); ?></td>
+                        <td class="text-center"><?php echo (date('H:i | d/m/Y',strtotime($row['updated_at']))); ?></td>
 
                         <td class="text-center">
                             <a href="Edit.php?id=<?php echo ($row['id']) ?>" class="btn btn-warning">Sửa</a>
@@ -75,20 +75,20 @@ $resultNameCategory = mysqli_query($conn, $selectCategory);
                     <form method="post" action="insert.php" enctype="multipart/form-data">
                         <div class="mt-4">
                             <label for="exampleInputName" class="form-label text-left">Tên sản phẩm</label>
-                            <input type="text" class="form-control" id="exampleInputName" placeholder="Nhập tên sản phẩm..." name="title">
+                            <input type="text" class="form-control" id="exampleInputName" placeholder="Nhập tên sản phẩm..." name="title" required>
                         </div>
                         <div class="mt-2">
                                 <label for="thumbnail" class="form-label text-left">Ảnh</label>
-                                <input type="file" class="form-control" id="thumbnail" placeholder="Chọn ảnh..." name="thumbnail" value="<?php echo $row['thumbnail']?>">
-                                <img class="mt-2" src="<?php echo $row['thumbnail']?>" width="250px" id="img_thumbnail"/>
+                                <input type="file" class="form-control" id="thumbnail" placeholder="Chọn ảnh..." name="thumbnail" value="<?php echo $row['thumbnail']?>" required> 
+                                <img class="mt-2" src="<?php echo $row['thumbnail']?>" width="250px" style="object-fit: cover;" height="300px" id="img_thumbnail"/>
                             </div>
                         <div class="mt-2">
                             <label for="exampleInputName" class="form-label text-left">Giá</label>
-                            <input type="text" class="form-control" id="exampleInputName" placeholder="Nhập giá..." name="price">
+                            <input type="text" class="form-control" id="exampleInputName" placeholder="Nhập giá..." name="price" required>
                         </div>
                         <div class="mt-2">
                             <label for="exampleInputName" class="form-label text-left">Danh mục</label>
-                            <select class="form-select form-select" aria-label=".form-select-sm example" name="id_category">
+                            <select class="form-select form-select" aria-label=".form-select-sm example" name="id_category" required>
                                 <option value="default" checked>Chọn danh mục...</option>
                                 <?php while ($categoryName = mysqli_fetch_assoc($resultNameCategory)) : ?>
                                     <option value="<?php echo $categoryName['id'] ?>"><?php echo $categoryName['name'] ?></option>
@@ -102,7 +102,7 @@ $resultNameCategory = mysqli_query($conn, $selectCategory);
                         </div>
                         <div class="mt-2 mb-2">
                             <label for="exampleInputDate" class="form-label">Ngày cập nhập</label>
-                            <input type="datetime-local" class="form-control" id="exampleInputQue" placeholder="Ngày update..." name="updated_at">
+                            <input type="datetime-local" class="form-control" id="exampleInputQue" placeholder="Ngày update..." name="updated_at" required>
                         </div>
 
                         <br>
