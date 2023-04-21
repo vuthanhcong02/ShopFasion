@@ -46,7 +46,7 @@ $result = mysqli_query($conn,$sql);
   }
 
   .nav li {
-    border-bottom: 3px solid blue;
+    border-bottom: 3px solid black;
   }
   .card{
     margin: 10px 15px;
@@ -86,9 +86,9 @@ $result = mysqli_query($conn,$sql);
       <div class="card p-2 border-dark" style="width: 15rem;">
       <img src="../admin/product/img/<?php echo $row['thumbnail'] ?>" class="card-img-top" alt="..."/>
         <div class="card-body">
-          <h5 class="card-title"><?php echo $row['title']?></h5>
-          <p class="card-text"><?php echo $row['decription']?></p>
-          <a href="#" class="btn-shop">Xem thêm</a>
+          <h5 class="card-title fs-6"><?php echo $row['title']?></h5>
+          <p class="card-text fs-6"><?php echo $row['decription']?></p>
+          <a href="product_Infor.php" class="btn-shop mt-3">Xem thêm</a>
         </div>
       </div>
       <?php endwhile; ?>
