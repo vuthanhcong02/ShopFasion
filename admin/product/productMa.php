@@ -47,7 +47,7 @@ $resultNameCategory = mysqli_query($conn, $selectCategory);
                     <tr>
                         <td class="text-center"><?php echo ($row['id']); ?></td>
                         <td class="text-center"><?php echo ($row['title']); ?></td>
-                        <td class="text-center"><img src="img/<?php echo ($row['thumbnail']); ?>" width="100px" height="130px" style="object-fit: cover;object-position: center;"/></td>
+                        <td class="text-center"><img src="img/<?php echo ($row['thumbnail']); ?>" width="150px" height="130px" style="object-fit: cover;"/></td>
                         <td class="text-center"><?php echo ($row['price']); ?></td>
                         <td class="text-center"><?php echo ($row['categoryname']); ?></td>
                         <td class="text-center"><?php echo ($row['decription']); ?></td>

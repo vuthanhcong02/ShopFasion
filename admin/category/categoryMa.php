@@ -42,8 +42,8 @@ $result = mysqli_query($conn, $sqlSelect);
                     <tr>
                         <td class="text-center"><?php echo ($row['id']); ?></td>
                         <td class="text-center"><?php echo ($row['name']); ?></td>
-                        <td class="text-center"><?php echo ($row['created_at']); ?></td>
-                        <td class="text-center"><?php echo ($row['updated_at']); ?></td>
+                        <td class="text-center"><?php echo (date('H:i | d/m/Y',strtotime($row['created_at']))); ?></td>
+                        <td class="text-center"><?php echo (date('H:i | d/m/Y',strtotime($row['updated_at']))); ?></td>
                         <td class="text-center">
                             <a href="Edit.php?id=<?php echo ($row['id']) ?>" class="btn btn-warning">Sửa</a>
                             <a onclick="return confirm('Ban co muon xoa khong ?');" href="delete.php?id=<?php echo ($row['id']) ?>" class="btn btn-danger">Xóa</a>

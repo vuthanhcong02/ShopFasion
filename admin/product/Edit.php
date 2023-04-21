@@ -25,7 +25,7 @@ $resultNameCategory = mysqli_query($conn, $selectCategory);
                             </div>
                             <div class="mt-2">
                                 <label for="thumbnail" class="form-label text-left">Ảnh</label>
-                                <input type="file" class="form-control" id="thumnail" placeholder="Chọn ảnh..." name="thumbnail" value="<?php echo $row['thumbnail']?>">
+                                <input type="file" class="form-control" id="thumnail" placeholder="Chọn ảnh..." name="thumbnail" value="img/<?php echo $row['thumbnail']?>" required>
                                 <img class="mt-2" src="img/<?php echo $row['thumbnail']?>" width="250px" id="img_thumbnail"/>
                             </div>
                             <div class="mt-2">
