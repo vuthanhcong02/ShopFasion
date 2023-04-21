@@ -1,12 +1,8 @@
 <?php
-$conn=mysqli_connect("localhost","root","","shopmini");
-if(!$conn){
-    die("Kết nối thất bại : ". mysqli_connect_error());
-}
-else{
-  $sql="SELECT * FROM products";
+require_once '../connectDB.php';
+$sql="SELECT * FROM products";
 $result = mysqli_query($conn,$sql);
-}
+
 ?>
 
 
@@ -63,10 +59,9 @@ $result = mysqli_query($conn,$sql);
 <body>
   <div class=" row container mt-4 mb-5 d-flex justify-content-between align-content-center">
     <div class="col-5 mt-2 slogan">
-      <div class="d-flex justify-content-center flex-column align-items-end">
-        <p>Fashion is the armor to</p>
-        <p>survice the reality</p>
-        <p>of erveryday life</p><label>-Bill Cunningham</label>
+      <div class="d-flex justify-content-center flex-column align-items-end mt-5">
+        <p>Fashion is the armor to survice the</p>
+        <p>reality of erveryday life</p><label>-Bill Cunningham</label>
         <button class="btn-shop mt-4 ">Shop Now</button>
       </div>
     </div>
@@ -88,12 +83,12 @@ $result = mysqli_query($conn,$sql);
     </ul>
     <div class="d-flex flex-wrap justify-content-center align-items-center all-product">
     <?php while ($row = mysqli_fetch_assoc($result)) : ?>
-      <div class="card" style="width: 13rem;">
-      <img src="../../admin/product/img/<?php echo $row['thumbnail'] ?>" class="card-img-top" alt="..."/>
+      <div class="card p-2 border-dark" style="width: 15rem;">
+      <img src="../admin/product/img/<?php echo $row['thumbnail'] ?>" class="card-img-top" alt="..."/>
         <div class="card-body">
           <h5 class="card-title"><?php echo $row['title']?></h5>
           <p class="card-text"><?php echo $row['decription']?></p>
-          <a href="#" class="btn btn-primary">Xem thêm</a>
+          <a href="#" class="btn-shop">Xem thêm</a>
         </div>
       </div>
       <?php endwhile; ?>

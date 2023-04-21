@@ -1,11 +1,8 @@
 <?php
-// $conn = mysqli_connect("localhost", "root", "", "shopmini");
-// if (!$conn) {
-//   die("Kết nối thất bại : " . mysqli_connect_error());
-// }
-// $sql = "SELECT name FROM category";
-// $result = mysqli_query($conn, $sql);
-// $row = mysqli_fetch_assoc($result);
+require_once '../connectDB.php';
+$sql = "SELECT name FROM category";
+$result = mysqli_query($conn, $sql);
+$row = mysqli_fetch_assoc($result);
 
 ?>
 
@@ -36,32 +33,14 @@
     font-size: 15px;
     margin-right: 50px;
   }
-
-  button.cart-text {
-    margin-left: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-radius: 5px;
-    outline: none;
-  }
-
-  .cart-text a {
-    color: gray;
-    text-decoration: none;
-    font-size: 16px;
-    margin-left: 10px;
-  }
-
-  .cart-text:hover {
-    color: white !important;
-    font-weight: 600 !important;
-  }
-
-  .cart-text svg {
-    margin-top: 2px;
-    margin-left: 5px;
-  }
+  button.fs-6.cart-text.btn-shop {
+    color: white;
+    background-color: black;
+}
+button.fs-6.cart-text.btn-shop:hover{
+    background-color: white;
+    color: black;
+}
   
 </style>
 
@@ -84,19 +63,19 @@
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Category
             </a>
-            <!-- <ul class="dropdown-menu category-menu" aria-labelledby="navbarDropdown">
+             <ul class="dropdown-menu category-menu" aria-labelledby="navbarDropdown">
               <?php
-              // $first = true;
-              // while ($row = mysqli_fetch_assoc($result)) :
-              //   if (!$first) {
-              //     echo '<li><hr class="dropdown-divider"></li>';
-              //   } else {
-              //     $first = false;
-              //   }
-              // ?>
-              //   <li><a class="dropdown-item" href="#"><?php echo $row['name']; ?></a></li>
-              // <?php //endwhile; ?>
-            </ul> -->
+              $first = true;
+              while ($row = mysqli_fetch_assoc($result)) :
+                if (!$first) {
+                  echo '<li><hr class="dropdown-divider"></li>';
+                } else {
+                  $first = false;
+                }
+               ?>
+                <li><a class="dropdown-item" href="#"><?php echo $row['name']; ?></a></li>
+               <?php endwhile; ?>
+            </ul>
 
           <li class="nav-item">
             <a class="nav-link" href="#">Product</a>
@@ -107,14 +86,12 @@
         </ul>
         <form class="d-flex">
           <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Search</button>
+          <button class="btn-shop" type="submit">Search</button>
         </form>
-        <button class="fs-5 cart-text btn btn-outline-success">
-          <a class="" href="#">Cart</a>
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
-            <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
-          </svg>
-        </button>
+        <div class="d-flex justify-content-center align-content-center">
+            <button class="fs-6 cart-text btn-shop">Cart</button>
+        </div>
+        
       </div>
     </div>
   </nav>
