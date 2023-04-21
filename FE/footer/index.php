@@ -212,7 +212,7 @@
 
 <body><!--====== FOOTER ONE PART START ======-->
     <footer class="footer-area footer-one">
-        <div class="footer-widget">
+        <div class="footer-widget mt-5">
             <div class="container">
                 <div class="row">
                     <div class="col-xl-6 col-lg-4 col-sm-12">
