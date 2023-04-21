@@ -1,3 +1,14 @@
+<?php
+// $conn = mysqli_connect("localhost", "root", "", "shopmini");
+// if (!$conn) {
+//   die("Kết nối thất bại : " . mysqli_connect_error());
+// }
+// $sql = "SELECT name FROM category";
+// $result = mysqli_query($conn, $sql);
+// $row = mysqli_fetch_assoc($result);
+
+?>
+
 <!doctype html>
 <html lang="en">
 
@@ -26,7 +37,7 @@
     margin-right: 50px;
   }
 
-  button.cart-text{
+  button.cart-text {
     margin-left: 10px;
     display: flex;
     justify-content: space-between;
@@ -34,21 +45,24 @@
     border-radius: 5px;
     outline: none;
   }
-  
+
   .cart-text a {
     color: gray;
     text-decoration: none;
     font-size: 16px;
     margin-left: 10px;
   }
-  .cart-text:hover{
-    color:white!important;
-    font-weight: 600!important;
-    }
-  .cart-text svg{
+
+  .cart-text:hover {
+    color: white !important;
+    font-weight: 600 !important;
+  }
+
+  .cart-text svg {
     margin-top: 2px;
     margin-left: 5px;
   }
+  
 </style>
 
 <body>
@@ -63,9 +77,27 @@
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="#">Home</a>
           </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a class="nav-link" href="#">Category</a>
-          </li>
+          </li> -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Category
+            </a>
+            <!-- <ul class="dropdown-menu category-menu" aria-labelledby="navbarDropdown">
+              <?php
+              // $first = true;
+              // while ($row = mysqli_fetch_assoc($result)) :
+              //   if (!$first) {
+              //     echo '<li><hr class="dropdown-divider"></li>';
+              //   } else {
+              //     $first = false;
+              //   }
+              // ?>
+              //   <li><a class="dropdown-item" href="#"><?php echo $row['name']; ?></a></li>
+              // <?php //endwhile; ?>
+            </ul> -->
+
           <li class="nav-item">
             <a class="nav-link" href="#">Product</a>
           </li>
