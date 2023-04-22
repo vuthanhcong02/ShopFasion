@@ -49,8 +49,8 @@ $result_A_product = mysqli_query($conn,$sql_A_product);
     margin: 10px 15px;
     background-color: white;
   }
-  .d-flex.flex-wrap.justify-content-center.align-items-center.all-product {
-    padding: 0 80px;
+.card :hover{
+  /* background-color: grey; */
 }
 </style>
 
@@ -79,16 +79,16 @@ $result_A_product = mysqli_query($conn,$sql_A_product);
         <a class="nav-link" href="#">Tất cả sản phẩm</a>
       </li>
     </ul>
-    <div class="d-flex flex-wrap justify-content-center align-items-center all-product">
+    <div class="d-flex flex-wrap justify-content-center align-items-start all-product">
     <?php while ($row = mysqli_fetch_assoc($result_A_product)) : ?>
-      <div class="card p-2 border-dark" style="width: 15rem;">
-      <img src="../admin/product/img/<?php echo $row['thumbnail'] ?>" class="card-img-top" alt="..."/>
-        <div class="card-body">
-          <h5 class="card-title fs-6"><?php echo $row['title']?></h5>
-          <p class="card-text fs-6"><?php echo $row['decription']?></p>
-          <a href="product_Infor.php?id=<?php echo $row['id'] ?>" class="btn-shop mt-3">Xem thêm</a>
+        <div class="card p-2" style="width: 15rem;">
+        <img src="../admin/product/img/<?php echo $row['thumbnail'] ?>" class="card-img-top" alt="..."/>
+          <div class="card-body">
+            <h5 class="card-title fs-6"><?php echo $row['title']?></h5>
+            <p class="card-text fs-6"><?php echo $row['price']?></p>
+            <a href="product_Infor.php?id=<?php echo $row['id'] ?>" class="btn-shop mt-3">Xem thêm</a>
+          </div>
         </div>
-      </div>
       <?php endwhile; ?>
     </div>
   </div>

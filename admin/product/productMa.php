@@ -25,7 +25,10 @@ $resultNameCategory = mysqli_query($conn, $selectCategory);
             <button type="button" class="btn btn-success mt-3 mb-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                 Thêm sản phẩm
             </button>
-            <a class="btn btn-primary text-white" href="../category/categoryMa.php" id="link-quan-ly-san-pham"><-Quản lí danh mục</a>
+           <div>
+                <a class="btn btn-primary text-white" href="../category/categoryMa.php" id="link-quan-ly-san-pham"><-Quản lí danh mục</a>
+                <a class="btn btn-primary text-white" href="../../FE/index.php" id="home">Home-></a>
+           </div>
         </div>
 
         <table class="table border">

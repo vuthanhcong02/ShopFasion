@@ -69,7 +69,7 @@
 
 
   $id_relative =$row_Infor['id_category'];
-  $sql_relative_Pro = "SELECT * FROM products JOIN category ON products.id_category = category.id WHERE id_category=$id_relative AND products.id!=$id";
+  $sql_relative_Pro = "SELECT * FROM products JOIN category ON products.id_category = category.id WHERE id_category=$id_relative";
   $querySql_relative = mysqli_query($conn,$sql_relative_Pro);
   $row_Pro_relative = mysqli_fetch_assoc($querySql_relative);
   
@@ -119,15 +119,15 @@
     </div>
     <div>
       <div class="fs-5 fw-bold mt-4 product_lienquan mb-4">Các sản phẩm liên quan</div>
-      <div class="d-flex flex-wrap justify-content-center align-items-center">
+      <div class="d-flex flex-wrap justify-content-start align-items-center">
       <?php while (  $row_Pro_relative = mysqli_fetch_assoc($querySql_relative)) : ?>
         <div class="card" style="width: 16rem; height:25rem;">
-          <img src="../admin/product/img/<?php echo $row_Pro_relative['thumbnail']?>" class="card-img-top" alt="..." height="250px" style="object-fit: cover;">
-          <div class="card-body">
-            <h5 class="card-title fs-6 p-1"><?php echo $row_Pro_relative['name']?></h5>
-            <p class="card-text fs-6 mb-3 p-1"><?php echo $row_Pro_relative['decription']?></p>
-            <a href="product_Infor2.php?id=<?php echo $row_Pro_relative['id'] ?>" class="btn-shop">Xem thêm</a>
-          </div>
+            <img src="../admin/product/img/<?php echo $row_Pro_relative['thumbnail']?>" class="card-img-top" alt="..." height="250px" style="object-fit: cover;">
+            <div class="card-body">
+              <h5 class="card-title fs-6 p-1"><?php echo $row_Pro_relative['title']?></h5>
+              <p class="card-text fs-6 mb-3 p-1"><?php echo $row_Pro_relative['price']?></p>
+              <a href="product_Infor2.php?id=<?php echo $row_Pro_relative['id'] ?>" class="btn-shop">Xem thêm</a>
+            </div>
         </div>
         <?php endwhile; ?>
       </div>

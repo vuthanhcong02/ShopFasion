@@ -88,7 +88,7 @@ $row_dropdown = mysqli_fetch_assoc($result_dropdown);
                             </ul>
     
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Product</a>
+                            <a class="nav-link" href="../FE/product.php">Product</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="./contact.php">Contact</a>

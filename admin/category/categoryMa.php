@@ -23,7 +23,10 @@ $result = mysqli_query($conn, $sqlSelect);
             <button type="button" class="btn btn-success mt-3 mb-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                 Thêm danh mục
             </button>
-            <a class="btn btn-primary text-white" href="../product/productMa.php" id="link-quan-ly-san-pham">Quản lý sản phẩm -></a>
+            <div>
+                <a class="btn btn-primary text-white" href="../product/productMa.php" id="link-quan-ly-san-pham"><--Quản lý sản phẩm</a>
+                <a class="btn btn-primary text-white" href="../../FE/index.php" id="home">Home-></a>
+            </div>
         </div>
 
         <table class="table border">
