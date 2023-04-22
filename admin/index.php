@@ -18,12 +18,15 @@
     <h5 class="container ">Admin</h5>
     <!-- Hiển thị các tab -->
     <!-- HTML -->
-    <ul class="nav nav-tabs">
+    <ul class="nav nav-tabs d-flex">
         <li class="nav-item">
             <a class="nav-link" href="./category/categoryMa.php" id="link-quan-ly-danh-muc">Quản lí danh mục</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="./product/productMa.php" id="link-quan-ly-san-pham">Quản lí sản phẩm</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="../FE/index.php" id="home">Home</a>
         </li>
     </ul>
 

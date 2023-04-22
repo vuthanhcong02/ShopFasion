@@ -44,6 +44,14 @@
   /* .row.d-flex.justify-align-content-center.align-items-center {
     padding: 50px;
 } */
+  .card {
+    margin: 10px;
+  }
+  .product_lienquan{
+    padding: 5px 0;
+    border-bottom: 2px solid black;
+    margin-bottom: 3px;
+  }
 </style>
 
 <body>
@@ -52,9 +60,20 @@
   include './header.php';
 
   $id = $_GET['id'];
-  $sqlInforP = "SELECT *FROM products WHERE id=$id";
+  
+ 
+  
+  $sqlInforP = "SELECT *FROM products WHERE products.id=$id";
   $result_Infor = mysqli_query($conn, $sqlInforP);
   $row_Infor = mysqli_fetch_assoc($result_Infor);
+
+
+  $id_relative =$row_Infor['id_category'];
+  $sql_relative_Pro = "SELECT * FROM products JOIN category ON products.id_category = category.id WHERE id_category=$id_relative AND products.id!=$id";
+  $querySql_relative = mysqli_query($conn,$sql_relative_Pro);
+  $row_Pro_relative = mysqli_fetch_assoc($querySql_relative);
+  
+  
   ?>
   <div class="container p-2 mt-5 ">
     <div class="row d-flex justify-content-center align-items-center">
@@ -98,6 +117,21 @@
         <button class="btn-shop" style="width: 100%; margin-left: 0;">Thêm vào giỏ hàng</button>
       </div>
     </div>
+    <div>
+      <div class="fs-5 fw-bold mt-4 product_lienquan mb-4">Các sản phẩm liên quan</div>
+      <div class="d-flex flex-wrap justify-content-center align-items-center">
+      <?php while (  $row_Pro_relative = mysqli_fetch_assoc($querySql_relative)) : ?>
+        <div class="card" style="width: 16rem; height:25rem;">
+          <img src="../admin/product/img/<?php echo $row_Pro_relative['thumbnail']?>" class="card-img-top" alt="..." height="250px" style="object-fit: cover;">
+          <div class="card-body">
+            <h5 class="card-title fs-6 p-1"><?php echo $row_Pro_relative['name']?></h5>
+            <p class="card-text fs-6 mb-3 p-1"><?php echo $row_Pro_relative['decription']?></p>
+            <a href="product_Infor2.php?id=<?php echo $row_Pro_relative['id'] ?>" class="btn-shop">Xem thêm</a>
+          </div>
+        </div>
+        <?php endwhile; ?>
+      </div>
+    </div>
   </div>
 
   <!-- Optional JavaScript; choose one of the two! -->
@@ -106,10 +140,10 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
   <!-- Option 2: Separate Popper and Bootstrap JS -->
-  
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
-  
+
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+
 </body>
 
 </html>

@@ -43,59 +43,69 @@ $row_dropdown = mysqli_fetch_assoc($result_dropdown);
         background-color: white;
         color: black;
     }
+    .position{
+        position: sticky;
+        top:0;
+        left: 0;
+        z-index: 1;
+        width: 100%;
+        background-color: white;
+    }
 </style>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-            <img src="https://cdn.ayroui.com/1.0/images/footer/logo.svg" alt="Logo" />
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="index.php">Home</a>
-                    </li>
-                    <!-- <li class="nav-item">
-            <a class="nav-link" href="#">Category</a>
-          </li> -->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Category
-                        </a>
-                        <ul class="dropdown-menu category-menu" aria-labelledby="navbarDropdown">
-                            <?php
-                            $first = true;
-                            while ($row_dropdown = mysqli_fetch_assoc($result_dropdown)) :
-                                if (!$first) {
-                                    echo '<li><hr class="dropdown-divider"></li>';
-                                } else {
-                                    $first = false;
-                                }
-                            ?>
-                                <li><a class="dropdown-item" href="#"><?php echo $row_dropdown['name']; ?></a></li>
-                            <?php endwhile;?>
-                        </ul>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Product</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="./contact.php">Contact</a>
-                    </li>
-                </ul>
-                <form class="d-flex">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn-shop" type="submit">Search</button>
-                </form>
-                <div class="d-flex justify-content-center align-content-center">
-                    <button class="fs-6 cart-text btn-shop">Cart</button>
+    <div class="position">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <img src="https://cdn.ayroui.com/1.0/images/footer/logo.svg" alt="Logo" />
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="index.php">Home</a>
+                        </li>
+                        <!-- <li class="nav-item">
+                <a class="nav-link" href="#">Category</a>
+              </li> -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Category
+                            </a>
+                            <ul class="dropdown-menu category-menu" aria-labelledby="navbarDropdown">
+                                <?php
+                                $first = true;
+                                while ($row_dropdown = mysqli_fetch_assoc($result_dropdown)) :
+                                    if (!$first) {
+                                        echo '<li><hr class="dropdown-divider"></li>';
+                                    } else {
+                                        $first = false;
+                                    }
+                                ?>
+                                    <li><a class="dropdown-item" href="#"><?php echo $row_dropdown['name']; ?></a></li>
+                                <?php endwhile;?>
+                            </ul>
+    
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Product</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./contact.php">Contact</a>
+                        </li>
+                    </ul>
+                    <form class="d-flex">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn-shop" type="submit">Search</button>
+                    </form>
+                    <div class="d-flex justify-content-center align-content-center">
+                        <button class="fs-6 cart-text btn-shop">Cart</button>
+                    </div>
+    
                 </div>
-
             </div>
-        </div>
-    </nav>
+        </nav>
+    </div>
     <!-- Optional JavaScript; choose one of the two! -->
 
     <!-- Option 1: Bootstrap Bundle with Popper -->

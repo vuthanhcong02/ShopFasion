@@ -47,6 +47,7 @@ $result_A_product = mysqli_query($conn,$sql_A_product);
   }
   .card{
     margin: 10px 15px;
+    background-color: white;
   }
   .d-flex.flex-wrap.justify-content-center.align-items-center.all-product {
     padding: 0 80px;
@@ -69,13 +70,13 @@ $result_A_product = mysqli_query($conn,$sql_A_product);
   <div>
     <ul class="nav justify-content-center mb-5">
       <li class="nav-item">
-        <a class="nav-link active" aria-current="page" href="#">Tất cả sản phẩm</a>
+        <a class="nav-link active" aria-current="page" href="#">Sản phẩm mới</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#">Sản phẩm bán chạy</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Sản phẩm mới</a>
+        <a class="nav-link" href="#">Tất cả sản phẩm</a>
       </li>
     </ul>
     <div class="d-flex flex-wrap justify-content-center align-items-center all-product">
