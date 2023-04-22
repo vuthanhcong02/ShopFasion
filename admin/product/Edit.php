@@ -6,6 +6,7 @@ $sqlSelect = "SELECT products.id,products.title,products.thumbnail,products.pric
 $result = mysqli_query($conn, $sqlSelect);
 $row=mysqli_fetch_assoc($result);
 $resultNameCategory = mysqli_query($conn, $selectCategory);
+mysqli_close($conn);
 ?>
 <head>
     <!-- Required meta tags -->

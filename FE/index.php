@@ -1,10 +1,10 @@
 <?php
-require_once '../connectDB.php';
-$sql = "SELECT * FROM products";
-$result = mysqli_query($conn, $sql);
-$sql1 = "SELECT name FROM category";
-$result1 = mysqli_query($conn, $sql1);
-$row1 = mysqli_fetch_assoc($result1);
+// require_once '../connectDB.php';
+// $sql = "SELECT * FROM products";
+// $result = mysqli_query($conn, $sql);
+// $sql1 = "SELECT name FROM category";
+// $result1 = mysqli_query($conn, $sql1);
+// $row1 = mysqli_fetch_assoc($result1);
 ?>
 <!doctype html>
 <html lang="en">
@@ -111,7 +111,7 @@ $row1 = mysqli_fetch_assoc($result1);
   <?php 
   include 'header.php';
   ?>
-  <?php include_once 'content.php'?>
+  <?php include 'content.php'?>
   <?php
   include 'footer.php';
   ?>

@@ -18,5 +18,5 @@ if($result){
     header("Location: productMa.php");
 }
 
-
+mysqli_close($conn);
 ?>

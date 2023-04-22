@@ -1,9 +1,9 @@
 <?php
 require_once '../connectDB.php';
-$sql = "SELECT name FROM category";
-$result = mysqli_query($conn, $sql);
-$row = mysqli_fetch_assoc($result);
-
+global $conn;
+$sql_dropdown = "SELECT name FROM category";
+$result_dropdown = mysqli_query($conn, $sql_dropdown);
+$row_dropdown = mysqli_fetch_assoc($result_dropdown);
 ?>
 
 <!doctype html>
@@ -61,28 +61,28 @@ $row = mysqli_fetch_assoc($result);
             <a class="nav-link" href="#">Category</a>
           </li> -->
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Category
                         </a>
                         <ul class="dropdown-menu category-menu" aria-labelledby="navbarDropdown">
                             <?php
                             $first = true;
-                            while ($row = mysqli_fetch_assoc($result)) :
+                            while ($row_dropdown = mysqli_fetch_assoc($result_dropdown)) :
                                 if (!$first) {
                                     echo '<li><hr class="dropdown-divider"></li>';
                                 } else {
                                     $first = false;
                                 }
                             ?>
-                                <li><a class="dropdown-item" href="#"><?php echo $row['name']; ?></a></li>
-                            <?php endwhile; ?>
+                                <li><a class="dropdown-item" href="#"><?php echo $row_dropdown['name']; ?></a></li>
+                            <?php endwhile;?>
                         </ul>
 
                     <li class="nav-item">
                         <a class="nav-link" href="#">Product</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Contact</a>
+                        <a class="nav-link" href="./contact.php">Contact</a>
                     </li>
                 </ul>
                 <form class="d-flex">
