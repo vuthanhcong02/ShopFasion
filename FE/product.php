@@ -3,21 +3,34 @@ require_once '../connectDB.php';
 global $conn;
 $sql = "SELECT * FROM category";
 $result = mysqli_query($conn, $sql);
-///
-if(isset($_GET['category'])){
-  $categoryId=$_GET['category'];
+/// phân trang
+$limit = 6;
+if (isset($_GET['page'])) {
+  $page = $_GET['page'];
+} else {
+  $page = 1;
 }
-else{
-  $categoryId=0; 
+$offset = ($page - 1) * $limit;
+// Xác định tổng sóo trang
+$sql_count = "SELECT COUNT(id) AS total FROM products";
+$result_count = mysqli_query($conn,$sql_count);
+$row_count = mysqli_fetch_assoc($result_count);
+$total_products = $row_count['total'];
+$total_pages = ceil($total_products/$limit);
+
+if (isset($_GET['category'])) {
+  $categoryId = $_GET['category'];
+} else {
+  $categoryId = 0;
 }
-if($categoryId==0){
-  $sql_product_byCategory = "SELECT *FROM products WHERE 1";
-}
-else{
+
+if ($categoryId == 0) {
+  $sql_product_byCategory = "SELECT *FROM products  LIMIT $limit OFFSET $offset";
+} else {
   $sql_product_byCategory = "SELECT *FROM products WHERE products.id_category=$categoryId";
-  
 }
-$result_product_byCategory = mysqli_query($conn,$sql_product_byCategory);
+$result_product_byCategory = mysqli_query($conn, $sql_product_byCategory);
+
 ?>
 
 <!doctype html>
@@ -49,25 +62,28 @@ $result_product_byCategory = mysqli_query($conn,$sql_product_byCategory);
     color: black;
     font-weight: 600;
   }
-  .btn-product{
+
+  .btn-product {
     text-decoration: none;
-    border:1px solid black;
-    color:black;
-    padding:5px 10px;
+    border: 1px solid black;
+    color: black;
+    padding: 5px 10px;
     background-color: white;
   }
-  .btn-product:hover{
+
+  .btn-product:hover {
     background-color: black;
     color: white;
 
   }
-  .card{
+
+  .card {
     margin: 8px;
   }
-  .active{
-    background-color: white!important;
-    padding: 5px 10px !important;
-    color: blue!important;
+
+  .active {
+    background-color: white !important;
+    color: blue !important;
   }
 </style>
 
@@ -90,31 +106,62 @@ $result_product_byCategory = mysqli_query($conn,$sql_product_byCategory);
               $first = false;
             }
           ?><?php
-              if($categoryId == $row['id']){
-                echo '<li><a class="dropdown-item active" href="?category='. $row['id'] .'">'."->  ". $row['name'] .'</a></li>';
-              }
-              else{
-                echo '<li><a class="dropdown-item " href="?category='. $row['id'] .'">'."->  ". $row['name'] .'</a></li>';
-              }
-          ?>
-          <?php endwhile; ?>
+            if ($categoryId == $row['id']) {
+              echo '<li><a class="dropdown-item active" href="?category=' . $row['id'] . '">' . "->  " . $row['name'] . '</a></li>';
+            } else {
+              echo '<li><a class="dropdown-item " href="?category=' . $row['id'] . '">' . "->  " . $row['name'] . '</a></li>';
+            }
+            ?>
+        <?php endwhile; ?>
         </ul>
       </section>
       <section class="col-10 p-2">
-      <p class="mt-2 fw-bold"><a href="?category=0" style="color: black;text-decoration: none;">TẤT CẢ SẢN PHẨM</a></p>
+        <p class="mt-2 fw-bold"><a href="?category=0" style="color: black;text-decoration: none;">TẤT CẢ SẢN PHẨM</a></p>
         <hr />
         <div class="border d-flex flex-wrap justify-content-start align-items-center">
-       <?php while ($row_result_product_byCategory =  mysqli_fetch_assoc($result_product_byCategory)) :?>
-          <div class="card" style="width: 10rem; height:16rem;">
-            <img src="../admin/product/img/<?php echo $row_result_product_byCategory['thumbnail']?>" class="card-img-top" alt="..." height="120px" style="object-fit: contain;">
-            <div class="card-body">
-              <h5 class="card-title fs-6"><?php echo $row_result_product_byCategory['title']?></h5>
-              <p class="card-text fs-6"><?php echo $row_result_product_byCategory['price']?></p>
-              <a href="product_Infor.php?id=<?php echo $row_result_product_byCategory['id'] ?>" class="btn-product">Xem thêm</a>
+          <?php while ($row_result_product_byCategory =  mysqli_fetch_assoc($result_product_byCategory)) : ?>
+            <div class="card" style="width: 10rem; height:16rem;">
+              <img src="../admin/product/img/<?php echo $row_result_product_byCategory['thumbnail'] ?>" class="card-img-top" alt="..." height="120px" style="object-fit: contain;">
+              <div class="card-body">
+                <h5 class="card-title fs-6"><?php echo $row_result_product_byCategory['title'] ?></h5>
+                <p class="card-text fs-6"><?php echo $row_result_product_byCategory['price'] ?></p>
+                <a href="product_Infor.php?id=<?php echo $row_result_product_byCategory['id'] ?>" class="btn-product">Xem thêm</a>
+              </div>
             </div>
-          </div>
           <?php endwhile; ?>
         </div>
+        <nav aria-label="Page navigation example" style="margin-top: 30px;" class="d-flex justify-content-end">
+          <ul class="pagination">
+            <?php
+            if($page>1)
+              {
+                echo '<li class="page-item"><a class="page-link" href="?page='.($page-1).'" aria-label="Previous"><span aria-hidden="false">&laquo;</span></a></li>';
+             }
+            ?>
+            <!-- <li class="page-item">
+                <a class="page-link" href="#" aria-label="Previous">
+                  <span aria-hidden="false">&laquo;</span>
+                </a
+              </li> -->
+            <?php
+              for($i=1;$i<=$total_pages;$i++){
+                if($page==$i){
+                echo  '<li class="page-item active"><a class="page-link" href="?page='.$i.'">'.$i.'</a></li>';
+                }
+                else{
+                  echo  '<li class="page-item "><a class="page-link" href="?page='.$i.'">'.$i.'</a></li>';
+                }
+              }
+            
+            ?>
+            <?php
+            if($page<$total_pages)
+              {
+                echo '<li class="page-item"><a class="page-link" href="?page='.($page+1).'" aria-label="Next"><span aria-hidden="false">&raquo;</span></a></li>';
+             }
+            ?>
+          </ul>
+        </nav>
       </section>
     </div>
 
