@@ -94,14 +94,14 @@ $total_page=ceil($total_count_products/$limit);
           <img src="../admin/product/img/<?php echo $row['thumbnail'] ?>" class="card-img-top" alt="..." />
           <div class="card-body">
             <h5 class="card-title fs-6"><?php echo $row['title'] ?></h5>
-            <p class="card-text fs-6"><?php echo $row['price'] ?></p>
+            <p class="card-text fs-6"><?php echo number_format($row['price'],0,",",".")." VND" ?></p>
             <a href="product_Infor.php?id=<?php echo $row['id'] ?>" class="btn-shop mt-3">Xem thêm</a>
           </div>
         </div>
       <?php endwhile; ?>
     </div>
     <nav aria-label="Page navigation example" class="d-flex justify-content-center align-items-center mt-5">
-      <ul class="pagination">
+      <ul class="pagination" style="z-index:-9999;">
        <?php
         if($page>1)
          {

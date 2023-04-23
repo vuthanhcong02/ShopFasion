@@ -86,14 +86,14 @@
             <div class="fs-6 fw-bold">Name : </div>
             <div class=""><?php echo $row_Infor['title'] ?></div>
           </div>
-          <div class="mb-3 d-flex flex-column">
+          <div class="mb-3 d-flex flex-column justify-content-center align-content-center">
             <p class="fs-6 fw-bold">Mô tả : </p>
-            <p class="mb-3"><?php echo $row_Infor['decription'] ?></p>
+            <p class=""><?php echo $row_Infor['decription'] ?></p>
           </div>
         </div>
         <div class="d-flex justify-content-center align-items-center mb-3">
           <p class="fs-6 fw-bold">Giá : </p>
-          <p style="margin-left: 50px;"><?php echo $row_Infor['price'] ?></p>
+          <p style="margin-left: 50px;"><?php echo number_format($row_Infor['price'],0,",",".")." VND" ?></p>
         </div>
         <div class="d-flex justify-content-center align-items-center mb-3">
           <p class="fs-6 fw-bold">Số lượng : </p>
@@ -125,7 +125,7 @@
             <img src="../admin/product/img/<?php echo $row_Pro_relative['thumbnail']?>" class="card-img-top" alt="..." height="250px" style="object-fit: cover;">
             <div class="card-body">
               <h5 class="card-title fs-6 p-1"><?php echo $row_Pro_relative['title']?></h5>
-              <p class="card-text fs-6 mb-3 p-1"><?php echo $row_Pro_relative['price']?></p>
+              <p class="card-text fs-6 mb-3 p-1"><?php echo number_format($row_Pro_relative['price'],0,",",".")." VND";?></p>
               <a href="product_Infor2.php?id=<?php echo $row_Pro_relative['id'] ?>" class="btn-shop">Xem thêm</a>
             </div>
         </div>

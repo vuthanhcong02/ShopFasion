@@ -11,6 +11,12 @@ $home_page = "/ShopFasion/ShopFasion/FE/index.php";
 $category_page = "/ShopFasion/ShopFasion/FE/product.php";
 $product_page = "/ShopFasion/ShopFasion/FE/product.php";
 $contact_page = "/ShopFasion/ShopFasion/FE/contact.php";
+// hiển thị theo danh mục;
+if(isset($_GET['category'])){
+    $idCategoryActive = $_GET['category'];
+}
+// $sql_productByCategory = "SELECT * FROM products WHERE products.id_category = $idCategory";
+// $result_productByCategory = mysqli_query($conn,$sql_productByCategory);
 ?>
 <!doctype html>
 <html lang="en">
@@ -96,7 +102,7 @@ $contact_page = "/ShopFasion/ShopFasion/FE/contact.php";
                                         $first = false;
                                     }
                                 ?>
-                                    <li><a class="dropdown-item" href="product.php"><?php echo $row_dropdown['name']; ?></a></li>
+                                    <li><a class="dropdown-item" href="product.php?idCategory=<?php echo $row_dropdown['id'];?>"><?php echo $row_dropdown['name']; ?></a></li>
                                 <?php endwhile;?>
                             </ul>
                         </li>

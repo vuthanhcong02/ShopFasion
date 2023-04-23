@@ -22,13 +22,17 @@ if (isset($_GET['category'])) {
   $categoryId = $_GET['category'];
 } else {
   $categoryId = 0;
+  }
+if(isset($_GET['idCategory'])){
+  $idCategory = $_GET['idCategory'];
 }
+else{
+  $idCategory=0;
+}
+$sql_product_byCategory = ($idCategory == 0 && $categoryId == 0) 
+  ? "SELECT * FROM products  LIMIT $limit OFFSET $offset" 
+  : "SELECT * FROM products WHERE products.id_category=" . ($idCategory != 0 ? $idCategory : $categoryId);
 
-if ($categoryId == 0) {
-  $sql_product_byCategory = "SELECT *FROM products  LIMIT $limit OFFSET $offset";
-} else {
-  $sql_product_byCategory = "SELECT *FROM products WHERE products.id_category=$categoryId";
-}
 $result_product_byCategory = mysqli_query($conn, $sql_product_byCategory);
 
 ?>
@@ -124,13 +128,13 @@ $result_product_byCategory = mysqli_query($conn, $sql_product_byCategory);
               <img src="../admin/product/img/<?php echo $row_result_product_byCategory['thumbnail'] ?>" class="card-img-top" alt="..." height="120px" style="object-fit: contain;">
               <div class="card-body">
                 <h5 class="card-title fs-6"><?php echo $row_result_product_byCategory['title'] ?></h5>
-                <p class="card-text fs-6"><?php echo $row_result_product_byCategory['price'] ?></p>
+                <p class="card-text fs-6"><?php echo number_format($row_result_product_byCategory['price'],0,",",".") . " VND"; ?></p>
                 <a href="product_Infor.php?id=<?php echo $row_result_product_byCategory['id'] ?>" class="btn-product">Xem thêm</a>
               </div>
             </div>
           <?php endwhile; ?>
         </div>
-        <nav aria-label="Page navigation example" style="margin-top: 30px;" class="d-flex justify-content-end">
+        <nav aria-label="Page navigation example" style="margin-top: 30px;z-index:9999;" class="d-flex justify-content-end">
           <ul class="pagination">
             <?php
             if($page>1)
@@ -146,7 +150,7 @@ $result_product_byCategory = mysqli_query($conn, $sql_product_byCategory);
             <?php
               for($i=1;$i<=$total_pages;$i++){
                 if($page==$i){
-                echo  '<li class="page-item active"><a class="page-link" href="?page='.$i.'">'.$i.'</a></li>';
+                echo  '<li class="page-item active" style="z-index:-9999;"><a class="page-link" href="?page='.$i.'">'.$i.'</a></li>';
                 }
                 else{
                   echo  '<li class="page-item "><a class="page-link" href="?page='.$i.'">'.$i.'</a></li>';
