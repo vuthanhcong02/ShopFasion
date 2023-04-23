@@ -12,7 +12,6 @@ $category_page = "/ShopFasion/ShopFasion/FE/product.php";
 $product_page = "/ShopFasion/ShopFasion/FE/product.php";
 $contact_page = "/ShopFasion/ShopFasion/FE/contact.php";
 ?>
-
 <!doctype html>
 <html lang="en">
 
