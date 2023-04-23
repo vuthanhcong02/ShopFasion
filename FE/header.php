@@ -1,9 +1,16 @@
 <?php
 require_once '../connectDB.php';
 global $conn;
-$sql_dropdown = "SELECT name FROM category";
+$sql_dropdown = "SELECT * FROM category";
 $result_dropdown = mysqli_query($conn, $sql_dropdown);
 $row_dropdown = mysqli_fetch_assoc($result_dropdown);
+
+//active page
+$current_page = $_SERVER['REQUEST_URI'];
+$home_page = "/ShopFasion/ShopFasion/FE/index.php";
+$category_page = "/ShopFasion/ShopFasion/FE/product.php";
+$product_page = "/ShopFasion/ShopFasion/FE/product.php";
+$contact_page = "/ShopFasion/ShopFasion/FE/contact.php";
 ?>
 
 <!doctype html>
@@ -30,7 +37,7 @@ $row_dropdown = mysqli_fetch_assoc($result_dropdown);
     }
 
     li.nav-item {
-        font-size: 15px;
+        font-size: 20px;
         margin-right: 50px;
     }
 
@@ -51,6 +58,9 @@ $row_dropdown = mysqli_fetch_assoc($result_dropdown);
         width: 100%;
         background-color: white;
     }
+    .active_page{
+        color: red!important;
+    }
 </style>
 
 <body>
@@ -64,11 +74,15 @@ $row_dropdown = mysqli_fetch_assoc($result_dropdown);
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="index.php">Home</a>
+                            <?php
+                            if($current_page==$home_page){
+                                echo '<a class="nav-link active_page" aria-current="home" href="index.php">Home</a>';
+                            }
+                            else{
+                                echo '<a class="nav-link" aria-current="home" href="index.php">Home</a>';
+                            }   
+                            ?>
                         </li>
-                        <!-- <li class="nav-item">
-                <a class="nav-link" href="#">Category</a>
-              </li> -->
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Category
@@ -83,15 +97,29 @@ $row_dropdown = mysqli_fetch_assoc($result_dropdown);
                                         $first = false;
                                     }
                                 ?>
-                                    <li><a class="dropdown-item" href="#"><?php echo $row_dropdown['name']; ?></a></li>
+                                    <li><a class="dropdown-item" href="product.php"><?php echo $row_dropdown['name']; ?></a></li>
                                 <?php endwhile;?>
                             </ul>
-    
-                        <li class="nav-item">
-                            <a class="nav-link" href="../FE/product.php">Product</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="./contact.php">Contact</a>
+                        <?php
+                            if($current_page==$product_page){
+                                echo '<a class="nav-link active_page" aria-current="product" href="product.php">Product</a>';
+                            }
+                            else{
+                                echo '<a class="nav-link" aria-current="product" href="product.php">Product</a>';
+                            }   
+                            ?>
+                        </li>
+                        <li class="nav-item">
+                        <?php
+                            if($current_page==$contact_page){
+                                echo '<a class="nav-link active_page" aria-current="contact" href="contact.php">Contact</a>';
+                            }
+                            else{
+                                echo '<a class="nav-link" aria-current="contact" href="contact.php">Contact</a>';
+                            }   
+                            ?>
                         </li>
                     </ul>
                     <form class="d-flex">
