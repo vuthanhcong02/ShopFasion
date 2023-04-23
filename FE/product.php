@@ -1,18 +1,23 @@
 <?php
 require_once '../connectDB.php';
 global $conn;
-$sql = "SELECT name FROM category";
+$sql = "SELECT * FROM category";
 $result = mysqli_query($conn, $sql);
 ///
 if(isset($_GET['category'])){
-  $categoryName=$_GET['category'];
+  $categoryId=$_GET['category'];
 }
 else{
-  $categoryName='';
+  $categoryId=0; 
 }
-$sql_product_byCategory = "SELECT *FROM products JOIN category ON products.id_category = category.id WHERE category.name LIKE '%$categoryName%'";
+if($categoryId==0){
+  $sql_product_byCategory = "SELECT *FROM products WHERE 1";
+}
+else{
+  $sql_product_byCategory = "SELECT *FROM products WHERE products.id_category=$categoryId";
+  
+}
 $result_product_byCategory = mysqli_query($conn,$sql_product_byCategory);
-
 ?>
 
 <!doctype html>
@@ -59,6 +64,11 @@ $result_product_byCategory = mysqli_query($conn,$sql_product_byCategory);
   .card{
     margin: 8px;
   }
+  .active{
+    background-color: white!important;
+    padding: 5px 10px !important;
+    color: blue!important;
+  }
 </style>
 
 <body>
@@ -80,18 +90,20 @@ $result_product_byCategory = mysqli_query($conn,$sql_product_byCategory);
               $first = false;
             }
           ?><?php
-              if($categoryName == $row['name']){
-                echo '<li><a class="dropdown-item active" href="?category='. $row['name'] .'">'. $row['name'] .'</a></li>';
+              if($categoryId == $row['id']){
+                echo '<li><a class="dropdown-item active" href="?category='. $row['id'] .'">'."->  ". $row['name'] .'</a></li>';
               }
               else{
-                echo '<li><a class="dropdown-item " href="?category='. $row['name'] .'">'. $row['name'] .'</a></li>';
+                echo '<li><a class="dropdown-item " href="?category='. $row['id'] .'">'."->  ". $row['name'] .'</a></li>';
               }
           ?>
           <?php endwhile; ?>
         </ul>
       </section>
       <section class="col-10 p-2">
-        <div class="mt-5 border d-flex flex-wrap justify-content-start align-items-center">
+      <p class="mt-2 fw-bold"><a href="?category=0" style="color: black;text-decoration: none;">TẤT CẢ SẢN PHẨM</a></p>
+        <hr />
+        <div class="border d-flex flex-wrap justify-content-start align-items-center">
        <?php while ($row_result_product_byCategory =  mysqli_fetch_assoc($result_product_byCategory)) :?>
           <div class="card" style="width: 10rem; height:16rem;">
             <img src="../admin/product/img/<?php echo $row_result_product_byCategory['thumbnail']?>" class="card-img-top" alt="..." height="120px" style="object-fit: contain;">

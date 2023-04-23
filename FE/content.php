@@ -60,7 +60,7 @@ $result_A_product = mysqli_query($conn,$sql_A_product);
       <div class="d-flex justify-content-center flex-column align-items-end mt-5">
         <p>Fashion is the armor to survice the</p>
         <p>reality of erveryday life</p><label>-Bill Cunningham</label>
-        <button class="btn-shop mt-4 ">Shop Now</button>
+        <a class="btn-shop mt-4 " href="../FE/product.php">Shop Now</a>
       </div>
     </div>
     <div class="col-5 mt-2">
