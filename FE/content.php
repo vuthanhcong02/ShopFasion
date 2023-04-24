@@ -91,7 +91,7 @@ $total_page=ceil($total_count_products/$limit);
     <div class="d-flex flex-wrap justify-content-center align-items-start all-product">
       <?php while ($row = mysqli_fetch_assoc($result_A_product)) : ?>
         <div class="card p-2" style="width: 15rem;">
-          <img src="../admin/product/img/<?php echo $row['thumbnail'] ?>" class="card-img-top" alt="..." />
+          <img src="../admin/img/<?php echo $row['thumbnail'] ?>" class="card-img-top" alt="..." />
           <div class="card-body">
             <h5 class="card-title fs-6"><?php echo $row['title'] ?></h5>
             <p class="card-text fs-6"><?php echo number_format($row['price'],0,",",".")." VND" ?></p>
@@ -101,7 +101,7 @@ $total_page=ceil($total_count_products/$limit);
       <?php endwhile; ?>
     </div>
     <nav aria-label="Page navigation example" class="d-flex justify-content-center align-items-center mt-5">
-      <ul class="pagination" style="z-index:-9999;">
+      <ul class="pagination" style="z-index:0;">
        <?php
         if($page>1)
          {

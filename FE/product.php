@@ -125,7 +125,7 @@ $result_product_byCategory = mysqli_query($conn, $sql_product_byCategory);
         <div class="border d-flex flex-wrap justify-content-start align-items-center">
           <?php while ($row_result_product_byCategory =  mysqli_fetch_assoc($result_product_byCategory)) : ?>
             <div class="card" style="width: 10rem; height:16rem;">
-              <img src="../admin/product/img/<?php echo $row_result_product_byCategory['thumbnail'] ?>" class="card-img-top" alt="..." height="120px" style="object-fit: contain;">
+              <img src="../admin/img/<?php echo $row_result_product_byCategory['thumbnail'] ?>" class="card-img-top" alt="..." height="120px" style="object-fit: contain;">
               <div class="card-body">
                 <h5 class="card-title fs-6"><?php echo $row_result_product_byCategory['title'] ?></h5>
                 <p class="card-text fs-6"><?php echo number_format($row_result_product_byCategory['price'],0,",",".") . " VND"; ?></p>

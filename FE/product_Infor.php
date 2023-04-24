@@ -78,7 +78,7 @@
   <div class="container p-2 mt-5 ">
     <div class="row d-flex justify-content-center align-items-center">
       <div class="col p-2 d-flex justify-content-center align-items-end">
-        <img src="../admin/product/img/<?php echo $row_Infor['thumbnail'] ?>" alt="" />
+        <img src="../admin/img/<?php echo $row_Infor['thumbnail'] ?>" alt="" />
       </div>
       <div class="col p-2 d-flex justify-content-between align-items-start flex-column">
         <div class="">
@@ -122,7 +122,7 @@
       <div class="d-flex flex-wrap justify-content-start align-items-center">
       <?php while (  $row_Pro_relative = mysqli_fetch_assoc($querySql_relative)) : ?>
         <div class="card" style="width: 16rem; height:25rem;">
-            <img src="../admin/product/img/<?php echo $row_Pro_relative['thumbnail']?>" class="card-img-top" alt="..." height="250px" style="object-fit: cover;">
+            <img src="../admin/img/<?php echo $row_Pro_relative['thumbnail']?>" class="card-img-top" alt="..." height="250px" style="object-fit: cover;">
             <div class="card-body">
               <h5 class="card-title fs-6 p-1"><?php echo $row_Pro_relative['title']?></h5>
               <p class="card-text fs-6 mb-3 p-1"><?php echo number_format($row_Pro_relative['price'],0,",",".")." VND";?></p>
