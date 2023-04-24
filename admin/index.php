@@ -1,13 +1,20 @@
 
 <?php
+session_start();
+require_once '../connectDB.php';
+
+
+if(!$_SESSION['login']) {
+    header("Location:../FE/login.php");
+}
+if($_SESSION['login'] && $_SESSION['login']!='admin') {
+    header("Location:../FE/index.php");
+}
+?>      
+<?php
 include('./includes/header.php');
 include('./includes/sidebar.php');
-
-
-
-?>      
-
-
+?>
 <!-- Sidebar -->
  
         <!-- End of Sidebar -->

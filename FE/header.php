@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once '../connectDB.php';
 global $conn;
 $sql_dropdown = "SELECT * FROM category";
@@ -12,7 +13,7 @@ $category_page = "/ShopFasion/ShopFasion/FE/product.php";
 $product_page = "/ShopFasion/ShopFasion/FE/product.php";
 $contact_page = "/ShopFasion/ShopFasion/FE/contact.php";
 // hiển thị theo danh mục;
-if(isset($_GET['category'])){
+if (isset($_GET['category'])) {
     $idCategoryActive = $_GET['category'];
 }
 // $sql_productByCategory = "SELECT * FROM products WHERE products.id_category = $idCategory";
@@ -28,7 +29,7 @@ if(isset($_GET['category'])){
     <link rel="stylesheet" href="index.css" type="text/css">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Fashion</title>
 </head>
 <style>
@@ -42,7 +43,7 @@ if(isset($_GET['category'])){
     }
 
     li.nav-item {
-        font-size: 20px;
+        font-size: 18px;
         margin-right: 50px;
     }
 
@@ -55,16 +56,31 @@ if(isset($_GET['category'])){
         background-color: white;
         color: black;
     }
-    .position{
+
+    .position {
         position: sticky;
-        top:0;
+        top: 0;
         left: 0;
         z-index: 1;
         width: 100%;
         background-color: white;
     }
-    .active_page{
-        color: red!important;
+
+    .active_page {
+        color: red !important;
+    }
+
+    .user {
+        text-decoration: none;
+        padding: 10px 10px;
+        margin-left: 5px;
+        color: black;
+    }
+
+    .user svg {
+        background-color: black;
+        color: white;
+        border-radius: 50%;
     }
 </style>
 
@@ -80,12 +96,11 @@ if(isset($_GET['category'])){
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
                             <?php
-                            if($current_page==$home_page){
+                            if ($current_page == $home_page) {
                                 echo '<a class="nav-link active_page" aria-current="home" href="index.php">Home</a>';
-                            }
-                            else{
+                            } else {
                                 echo '<a class="nav-link" aria-current="home" href="index.php">Home</a>';
-                            }   
+                            }
                             ?>
                         </li>
                         <li class="nav-item dropdown">
@@ -102,28 +117,26 @@ if(isset($_GET['category'])){
                                         $first = false;
                                     }
                                 ?>
-                                    <li><a class="dropdown-item" href="product.php?idCategory=<?php echo $row_dropdown['id'];?>"><?php echo $row_dropdown['name']; ?></a></li>
-                                <?php endwhile;?>
+                                    <li><a class="dropdown-item" href="product.php?idCategory=<?php echo $row_dropdown['id']; ?>"><?php echo $row_dropdown['name']; ?></a></li>
+                                <?php endwhile; ?>
                             </ul>
                         </li>
                         <li class="nav-item">
-                        <?php
-                            if($current_page==$product_page){
+                            <?php
+                            if ($current_page == $product_page) {
                                 echo '<a class="nav-link active_page" aria-current="product" href="product.php">Product</a>';
-                            }
-                            else{
+                            } else {
                                 echo '<a class="nav-link" aria-current="product" href="product.php">Product</a>';
-                            }   
+                            }
                             ?>
                         </li>
                         <li class="nav-item">
-                        <?php
-                            if($current_page==$contact_page){
+                            <?php
+                            if ($current_page == $contact_page) {
                                 echo '<a class="nav-link active_page" aria-current="contact" href="contact.php">Contact</a>';
-                            }
-                            else{
+                            } else {
                                 echo '<a class="nav-link" aria-current="contact" href="contact.php">Contact</a>';
-                            }   
+                            }
                             ?>
                         </li>
                     </ul>
@@ -134,7 +147,30 @@ if(isset($_GET['category'])){
                     <div class="d-flex justify-content-center align-content-center">
                         <button class="fs-6 cart-text btn-shop">Cart</button>
                     </div>
-    
+                    <div class="dropdown">
+                        <a class="dropdown-toggle user" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">Hi,Cong</a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">'
+                        <?php
+                        if ($_SESSION['login']) {
+                            echo '<li><a class="dropdown-item" href="login.php">Thong tin</a></li>';
+                            echo '<li><a class="dropdown-item" href="register.php">Cai dat</a></li>';
+                            echo '<li><a class="dropdown-item" href="register.php">Đăng xuat</a></li>';
+                        } else {
+                            echo '
+                            <a class="dropdown-toggle user" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                            <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+                            </svg>
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">';
+                            echo '<li><a class="dropdown-item" href="login.php">Dang ki</a></li>';
+                            echo '<li><a class="dropdown-item" href="register.php">Dang nhap</a></li>';
+                          
+                        }
+                        ?>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </nav>
