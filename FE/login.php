@@ -11,7 +11,9 @@ if ($_POST) {
     // die;
     if ($row) {
         $_SESSION['login'] = $row['role'];
+        $_SESSION['fullname'] = $row['fullname'];
         header("Location: ../admin/index.php");
+        // header("Location: header.php");
     } else {
         $error['invalid']="Tên đăng nhập hoặc mật khẩu không đúng!";
     }
