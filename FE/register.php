@@ -1,4 +1,5 @@
 <?php
+
 require_once '../connectDB.php';
 $errors = [];
 if(isset($_POST['register'])){
@@ -9,10 +10,8 @@ if(isset($_POST['register'])){
              }
          }
         $fullname=$_POST['fullname'];
-         if(isset( $fullname)){
-            if(!preg_match("/^[a-zA-Z ]*$/", $fullname)){
-                $errors['fullname'] = "Tên đầy đủ không hợp lệ";
-             }
+         if(!preg_match("/^[a-zA-Z \p{L}]+$/u", $fullname)){
+             $errors['fullname'] = "Tên đầy đủ không hợp lệ";
          }
         $email =  $_POST['email'];
         if(isset($email)){
@@ -32,19 +31,18 @@ if(isset($_POST['register'])){
                 $errors['rePassword'] = "Mật khẩu nhập lại không trùng khớp";
              }
     }
-}
-if(empty($errors)){
-    $sql ="INSERT INTO accounts(username,fullname,email,password) VALUES('$username','$fullname','$email','$password')";
-    $result = mysqli_query($conn,$sql);
-    if($result){
-        header("Location: login.php");
+    if(isset($errors) && !empty($errors)){
+    
     }
+    else{
+        $sql ="INSERT INTO accounts(username,fullname,email,password) VALUES('$username','$fullname','$email','$password')";
+        $result = mysqli_query($conn,$sql);
+        if($result){
+            header("Location: login.php");
+        }
+    } 
+    
 }
-else{
-   
-} 
-
-  
 
 ?>
 
