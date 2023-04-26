@@ -1,13 +1,9 @@
 <?php
+session_start();
+ob_start();
+require_once '../connectDB.php';
 include('./includes/header.php');
 include('./includes/sidebar.php');
-
-
-
-?>
-
-<?php
-require_once '../connectDB.php';
 $sqlSelect = "SELECT * FROM category ";
 $result = mysqli_query($conn, $sqlSelect);
 ?>
@@ -189,7 +185,7 @@ $result = mysqli_query($conn, $sqlSelect);
                 <!-- Nav Item - User Information -->
                 <li class="nav-item dropdown no-arrow">
                     <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                        <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo $_SESSION['fullname']?></span>
                         <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
                     </a>
                     <!-- Dropdown - User Information -->
@@ -272,7 +268,7 @@ $result = mysqli_query($conn, $sqlSelect);
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="staticBackdropLabel">Thông tin sinh viên</h5>
+                        <h5 class="modal-title" id="staticBackdropLabel">Thông tin danh mục</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">

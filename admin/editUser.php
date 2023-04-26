@@ -1,9 +1,11 @@
 <?php
 session_start();
 require_once '../connectDB.php';
-$sql_User = "SELECT * FROM accounts";
-$result_Users = mysqli_query($conn, $sql_User);
-$row1 = mysqli_fetch_assoc($result_Users);
+
+$id_user_update = $_GET['id'];
+$sql_user_show = "SELECT * FROM accounts WHERE id=$id_user_update";
+$result_user_show = mysqli_query($conn, $sql_user_show);
+$row_show = mysqli_fetch_assoc($result_user_show);
 
 
 
@@ -232,36 +234,23 @@ include('./includes/sidebar.php');
                 <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
             </div>
             <div class="container">
-                <table class="table border">
-                    <thead class="table-dark">
-                        <tr>
-                            <th class="text-center" scope="col">ID</th>
-                            <th class="text-center" scope="col">Username</th>
-                            <th class="text-center" scope="col">Họ tên</th>
-                            <th class="text-center" scope="col">Email</th>
-                            <th class="text-center" scope="col">Handle</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php while ($row = mysqli_fetch_assoc($result_Users)) : ?>
-
-                            <tr>
-                                <td class="text-center"><?php echo $row['id'];?></th>
-                                <td class="text-center"><?php echo $row['username'];?></td>
-                                <td class="text-center"><?php echo $row['fullname'];?></td>
-                                <td class="text-center"><?php echo $row['email'];?></td>
-                                <td class="text-center">
-                                    <a class="btn btn-warning" href="editUser.php?id=<?php echo $row['id']?>">
-                                        Sửa
-                                    </a>
-                                    <a href="deleteUser.php?id=<?php echo $row['id'] ?>" class="btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa không ?')">Xóa</a>
-                                </td>
-                            </tr>
-                        <?php endwhile ?>
-                    </tbody>
-                </table>
+                <form method="post" action="updateUser.php?id=<?php echo $row_show['id'] ?>" enctype="multipart/form-data">
+                    <div class="mt-4">
+                        <label for="exampleInputName" class="form-label text-left">username:</label>
+                        <input type="text" class="form-control" id="exampleInputName" placeholder="" name="username" value="<?php echo $row_show['username']; ?>">
+                    </div>
+                    <div class="mb-2">
+                        <label for="exampleInputFName" class="form-label">Họ tên: </label>
+                        <input type="text" class="form-control" id="exampleInputClass" placeholder="" name="fullname" value="<?php echo $row_show['fullname']; ?>">
+                    </div>
+                    <div class="mb-2">
+                        <label for="exampleInput" class="form-label">Email:</label>
+                        <input type="email" class="form-control" id="exampleInputQue" placeholder="" name="email" value="<?php echo $row_show['email']; ?>">
+                    </div>
+                    <button type="submit" class="btn btn-success mt-5">Lưu</button>
+                </form>
             </div>
-           
+
             <!-- Content Row -->
             <!-- Content Row -->
 
