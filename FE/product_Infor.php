@@ -114,7 +114,7 @@
             <p class="btn-shop-size">43</p>
           </div>
         </div>
-        <button class="btn-shop" style="width: 100%; margin-left: 0;">Thêm vào giỏ hàng</button>
+        <a href="cart.php?id=<?php echo $row_Infor['id']?>" class="btn-shop text-center" style="width: 100%; margin-left: 0;">Thêm vào giỏ hàng</a>
       </div>
     </div>
     <div>
