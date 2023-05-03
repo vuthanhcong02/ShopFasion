@@ -4,7 +4,6 @@ require_once '../connectDB.php';
 global $conn;
 $sql_dropdown = "SELECT * FROM category";
 $result_dropdown = mysqli_query($conn, $sql_dropdown);
-$row_dropdown = mysqli_fetch_assoc($result_dropdown);
 
 //active page
 $current_page = $_SERVER['REQUEST_URI'];

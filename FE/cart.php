@@ -26,8 +26,14 @@ if (isset($_POST['add_to_cart']) && isset($_POST['size']) && isset($_POST['quant
 
     }
 }
+else{
+    // header("Location: product_Infor.php");
+}
 $sql_product_order = "SELECT * FROM order_details JOIN products ON order_details.product_id = products.id";
 $result_order = mysqli_query($conn, $sql_product_order);
+$sql_total = "SELECT SUM(total_money) as total FROM order_details";
+$result_total = mysqli_query($conn,$sql_total);
+$row_total = mysqli_fetch_assoc($result_total);
 mysqli_close($conn);
 ?>
 <!doctype html>
@@ -124,8 +130,9 @@ mysqli_close($conn);
         <table id="cart" class="table table-hover table-condensed">
             <thead>
                 <tr>
-                    <th style="width:50%">Product</th>
+                    <th style="width:42%">Product</th>
                     <th style="width:10%">Price</th>
+                    <th style="width:8%">Size</th>
                     <th style="width:8%">Quantity</th>
                     <th style="width:22%" class="text-center">Subtotal</th>
                     <th style="width:10%"></th>
@@ -138,18 +145,19 @@ mysqli_close($conn);
               
                     <td data-th="Product">
                         <div class="row">
-                            <div class="col-sm-2 hidden-xs"><img src="../admin/img/<?php echo $row_order['thumbnail'] ?>" alt="..." class="img-responsive" width="100px" /></div>
-                            <div class="col-sm-10">
+                            <div class="col-sm-3 hidden-xs"><img src="../admin/img/<?php echo $row_order['thumbnail'] ?>" alt="..." class="img-responsive" width="100px" /></div>
+                            <div class="col-sm-9">
                                 <h4 class="nomargin"><?php echo $row_order['title'] ?></h4>
                                 <p><?php echo $row_order['decription'] ?></p>
                             </div>
                         </div>
                     </td>
-                    <td data-th="Price"><?php echo $row_order['price'] ?></td>
+                    <td data-th="Price"><?php echo number_format($row_order['price'], 0, ",", ".") . " VND" ?></td>
+                    <td><?php echo $row_order['size']?></td>
                     <td data-th="Quantity">
                         <input type="number" class="form-control text-center" value="<?php echo $row_order['quantity']?>">
                     </td>
-                    <td data-th="Subtotal" class="text-center"><?php echo $row_order['total_money'] ?></td>
+                    <td data-th="Subtotal" class="text-center"><?php echo number_format($row_order['total_money'], 0, ",", ".") . " VND" ?></td>
                     <td class="actions" data-th="">
                         <button class="btn btn-info btn-sm"><i class="fa fa-refresh"></i></button>
                         <button class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>
@@ -162,8 +170,8 @@ mysqli_close($conn);
             <tfoot>
                 <tr>
                     <td><a href="../FE/product.php" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
-                    <td colspan="2" class="hidden-xs"></td>
-                    <td class="hidden-xs text-center"><strong>1000</strong></td>
+                    <td colspan="3" class="hidden-xs"></td>
+                    <td class="hidden-xs text-center"><strong><?php echo number_format($row_total['total'], 0, ",", ".") . " VND" ?></strong></td>
                     <td><a href="#" class="btn btn-success btn-block">Checkout <i class="fa fa-angle-right"></i></a></td>
                 </tr>
             </tfoot>
