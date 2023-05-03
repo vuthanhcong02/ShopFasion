@@ -58,6 +58,19 @@
     background-color: black;
     color: white;
   }
+
+  input.quantity-input.text-center {
+    width: 30px;
+    border: none;
+  }
+
+  input.btn-shop-size {
+    width: 50px;
+    cursor: pointer;
+  }
+  .form-check {
+    margin: 12px 10px !important;
+}
 </style>
 
 <body>
@@ -82,48 +95,81 @@
 
   ?>
   <div class="container p-2 mt-5 ">
-    <form action="" method="post">
-    <div class="row d-flex justify-content-center align-items-center">
-      <div class="col p-2 d-flex justify-content-center align-items-end">
-        <img src="../admin/img/<?php echo $row_Infor['thumbnail'] ?>" alt="" />
+    <form action="cart.php" method="post">
+      <div class="row d-flex justify-content-center align-items-center">
+        <div class="col p-2 d-flex justify-content-center align-items-end">
+          <img src="../admin/img/<?php echo $row_Infor['thumbnail'] ?>" alt="" />
+        </div>
+        <div class="col p-2 d-flex justify-content-between align-items-start flex-column">
+          <div class="">
+            <div class="mb-3 d-flex flex-column justify-content-center align-content-center">
+              <div class="fs-6 fw-bold">Name : </div>
+              <div class=""><?php echo $row_Infor['title'] ?></div>
+            </div>
+            <div class="mb-3 d-flex flex-column justify-content-center align-content-center">
+              <p class="fs-6 fw-bold">Mô tả : </p>
+              <p class=""><?php echo $row_Infor['decription'] ?></p>
+            </div>
+          </div>
+          <div class="d-flex justify-content-center align-items-center mb-3">
+            <p class="fs-6 fw-bold">Giá : </p>
+            <p style="margin-left: 50px;"><?php echo number_format($row_Infor['price'], 0, ",", ".") . " VND" ?></p>
+          </div>
+          <div class="d-flex justify-content-center align-items-center mb-3">
+            <p class="fs-6 fw-bold">Số lượng : </p>
+            <div class="d-flex justify-content-center align-items-center">
+              <button class="btn-shop-size minus-btn" style="margin-left: 10px;">-</button>
+              <input type="text" id="" class="quantity-input text-center" name="quantity" value="1" width="20px">
+              <button class="btn-shop-size plus-btn" style="margin-left: 10px;">+</button>
+            </div>
+          </div>
+          <div class="d-flex justify-content-center align-items-center mb-3">
+            <div class="fs-6 fw-bold">Size : </div>
+            <div class="d-flex justify-content-center align-items-center" style="margin-left: 46px;">
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="size" id="flexRadioDefault1" value="38">
+                <label class="form-check-label" for="flexRadioDefault1">
+                  38
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="size" id="flexRadioDefault1" value="39">
+                <label class="form-check-label" for="flexRadioDefault1">
+                  39
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="size" id="flexRadioDefault1" value="40">
+                <label class="form-check-label" for="flexRadioDefault1">
+                  40
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="size" id="flexRadioDefault1" value="41">
+                <label class="form-check-label" for="flexRadioDefault1">
+                  41
+                </label>
+              </div>
+
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="size" id="flexRadioDefault1" value="42">
+                <label class="form-check-label" for="flexRadioDefault1">
+                  42
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="size" id="flexRadioDefault1" value="43">
+                <label class="form-check-label" for="flexRadioDefault1">
+                  43
+                </label>
+              </div>
+            </div>
+          </div>
+          <input type="hidden" value="<?php echo $row_Infor['id'] ?>" name="product_id">
+          <input type="hidden" value="<?php echo $row_Infor['price'] ?>" name="price">
+          <button type="submit" class="btn-shop text-center" style="width: 100%; margin-left: 0;" name="add_to_cart">Thêm vào giỏ hàng</button>
+        </div>
       </div>
-      <div class="col p-2 d-flex justify-content-between align-items-start flex-column">
-        <div class="">
-          <div class="mb-3 d-flex flex-column justify-content-center align-content-center">
-            <div class="fs-6 fw-bold">Name : </div>
-            <div class=""><?php echo $row_Infor['title'] ?></div>
-          </div>
-          <div class="mb-3 d-flex flex-column justify-content-center align-content-center">
-            <p class="fs-6 fw-bold">Mô tả : </p>
-            <p class=""><?php echo $row_Infor['decription'] ?></p>
-          </div>
-        </div>
-        <div class="d-flex justify-content-center align-items-center mb-3">
-          <p class="fs-6 fw-bold">Giá : </p>
-          <p style="margin-left: 50px;"><?php echo number_format($row_Infor['price'], 0, ",", ".") . " VND" ?></p>
-        </div>
-        <div class="d-flex justify-content-center align-items-center mb-3">
-          <p class="fs-6 fw-bold">Số lượng : </p>
-          <div class="d-flex justify-content-center align-items-center">
-            <button class="btn-shop-size minus-btn" style="margin-left: 10px;">-</button>
-            <span id="" class="quantity-input text-center">1</span>
-            <button class="btn-shop-size plus-btn" style="margin-left: 10px;">+</button>
-          </div>
-        </div>
-        <div class="d-flex justify-content-center align-items-center mb-3">
-          <p class="fs-6 fw-bold">Size : </p>
-          <div class="d-flex justify-content-center align-items-center" style="margin-left: 46px;">
-            <button class="btn-shop-size" type="submit" name="size" value="38">38</button>
-            <button class="btn-shop-size" type="submit" name="size" value="39">39</button>
-            <button class="btn-shop-size" type="submit" name="size" value="40">40</button>
-            <button class="btn-shop-size" type="submit" name="size" value="41">41</button>
-            <button class="btn-shop-size" type="submit" name="size" value="42">42</button>
-            <button class="btn-shop-size" type="submit" name="size" value="43">43</button>
-          </div>
-        </div>
-        <button type="submit" class="btn-shop text-center" style="width: 100%; margin-left: 0;" name="add_to_cart">Thêm vào giỏ hàng</button>
-      </div>
-    </div>
     </form>
     <div>
       <div class="fs-5 fw-bold mt-4 product_lienquan mb-4">Các sản phẩm liên quan</div>
@@ -154,24 +200,24 @@
 
 </body>
 <script>
-var quantityInput = document.getElementsByClassName('quantity-input')[0];
-var minusBtn = document.getElementsByClassName('minus-btn')[0];
-var plusBtn = document.getElementsByClassName('plus-btn')[0];
+  var quantityInput = document.getElementsByClassName('quantity-input')[0];
+  var minusBtn = document.getElementsByClassName('minus-btn')[0];
+  var plusBtn = document.getElementsByClassName('plus-btn')[0];
 
   minusBtn.addEventListener('click', function(e) {
     e.preventDefault(); // Ngăn chặn trang web bị tải lại
 
-    var quantity = parseInt(quantityInput.textContent) || 0;
+    var quantity = parseInt(quantityInput.value) || 0;
     if (quantity > 0) {
-      quantityInput.textContent = quantity - 1;
+      quantityInput.value = quantity - 1;
     }
   });
 
   plusBtn.addEventListener('click', function(e) {
     e.preventDefault(); // Ngăn chặn trang web bị tải lại
 
-    var quantity = parseInt(quantityInput.textContent) || 0;
-    quantityInput.textContent = quantity + 1;
+    var quantity = parseInt(quantityInput.value) || 0;
+    quantityInput.value = quantity + 1;
   });
 
   // Lấy tất cả các nút kích thước
