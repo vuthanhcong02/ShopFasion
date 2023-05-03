@@ -47,10 +47,16 @@
   .card {
     margin: 10px;
   }
-  .product_lienquan{
+
+  .product_lienquan {
     padding: 5px 0;
     border-bottom: 2px solid black;
     margin-bottom: 3px;
+  }
+
+  .selected {
+    background-color: black;
+    color: white;
   }
 </style>
 
@@ -60,22 +66,23 @@
   include './header.php';
 
   $id = $_GET['id'];
-  
- 
-  
+
+
+
   $sqlInforP = "SELECT *FROM products WHERE products.id=$id";
   $result_Infor = mysqli_query($conn, $sqlInforP);
   $row_Infor = mysqli_fetch_assoc($result_Infor);
 
 
-  $id_relative =$row_Infor['id_category'];
+  $id_relative = $row_Infor['id_category'];
   $sql_relative_Pro = "SELECT * FROM products JOIN category ON products.id_category = category.id WHERE id_category=$id_relative";
-  $querySql_relative = mysqli_query($conn,$sql_relative_Pro);
+  $querySql_relative = mysqli_query($conn, $sql_relative_Pro);
   $row_Pro_relative = mysqli_fetch_assoc($querySql_relative);
-  
-  
+
+
   ?>
   <div class="container p-2 mt-5 ">
+    <form action="" method="post">
     <div class="row d-flex justify-content-center align-items-center">
       <div class="col p-2 d-flex justify-content-center align-items-end">
         <img src="../admin/img/<?php echo $row_Infor['thumbnail'] ?>" alt="" />
@@ -93,42 +100,43 @@
         </div>
         <div class="d-flex justify-content-center align-items-center mb-3">
           <p class="fs-6 fw-bold">Giá : </p>
-          <p style="margin-left: 50px;"><?php echo number_format($row_Infor['price'],0,",",".")." VND" ?></p>
+          <p style="margin-left: 50px;"><?php echo number_format($row_Infor['price'], 0, ",", ".") . " VND" ?></p>
         </div>
         <div class="d-flex justify-content-center align-items-center mb-3">
           <p class="fs-6 fw-bold">Số lượng : </p>
-          <div class=" d-flex justify-content-center align-items-center">
-            <p class="btn-shop-size" style="margin-left: 10px;">-</p>
-            <p class="">0</p>
-            <p class="btn-shop-size" style="margin-left: 10px;">+</p>
+          <div class="d-flex justify-content-center align-items-center">
+            <button class="btn-shop-size minus-btn" style="margin-left: 10px;">-</button>
+            <span id="" class="quantity-input text-center">1</span>
+            <button class="btn-shop-size plus-btn" style="margin-left: 10px;">+</button>
           </div>
         </div>
         <div class="d-flex justify-content-center align-items-center mb-3">
           <p class="fs-6 fw-bold">Size : </p>
           <div class="d-flex justify-content-center align-items-center" style="margin-left: 46px;">
-            <p class="btn-shop-size">38</p>
-            <p class="btn-shop-size">39</p>
-            <p class="btn-shop-size">40</p>
-            <p class="btn-shop-size">41</p>
-            <p class="btn-shop-size">42</p>
-            <p class="btn-shop-size">43</p>
+            <button class="btn-shop-size" type="submit" name="size" value="38">38</button>
+            <button class="btn-shop-size" type="submit" name="size" value="39">39</button>
+            <button class="btn-shop-size" type="submit" name="size" value="40">40</button>
+            <button class="btn-shop-size" type="submit" name="size" value="41">41</button>
+            <button class="btn-shop-size" type="submit" name="size" value="42">42</button>
+            <button class="btn-shop-size" type="submit" name="size" value="43">43</button>
           </div>
         </div>
-        <a href="cart.php?id=<?php echo $row_Infor['id']?>" class="btn-shop text-center" style="width: 100%; margin-left: 0;">Thêm vào giỏ hàng</a>
+        <button type="submit" class="btn-shop text-center" style="width: 100%; margin-left: 0;" name="add_to_cart">Thêm vào giỏ hàng</button>
       </div>
     </div>
+    </form>
     <div>
       <div class="fs-5 fw-bold mt-4 product_lienquan mb-4">Các sản phẩm liên quan</div>
       <div class="d-flex flex-wrap justify-content-start align-items-center">
-      <?php while (  $row_Pro_relative = mysqli_fetch_assoc($querySql_relative)) : ?>
-        <div class="card" style="width: 16rem; height:25rem;">
-            <img src="../admin/img/<?php echo $row_Pro_relative['thumbnail']?>" class="card-img-top" alt="..." height="250px" style="object-fit: cover;">
+        <?php while ($row_Pro_relative = mysqli_fetch_assoc($querySql_relative)) : ?>
+          <div class="card" style="width: 16rem; height:25rem;">
+            <img src="../admin/img/<?php echo $row_Pro_relative['thumbnail'] ?>" class="card-img-top" alt="..." height="250px" style="object-fit: cover;">
             <div class="card-body">
-              <h5 class="card-title fs-6 p-1"><?php echo $row_Pro_relative['title']?></h5>
-              <p class="card-text fs-6 mb-3 p-1"><?php echo number_format($row_Pro_relative['price'],0,",",".")." VND";?></p>
+              <h5 class="card-title fs-6 p-1"><?php echo $row_Pro_relative['title'] ?></h5>
+              <p class="card-text fs-6 mb-3 p-1"><?php echo number_format($row_Pro_relative['price'], 0, ",", ".") . " VND"; ?></p>
               <a href="product_Infor2.php?id=<?php echo $row_Pro_relative['id'] ?>" class="btn-shop">Xem thêm</a>
             </div>
-        </div>
+          </div>
         <?php endwhile; ?>
       </div>
     </div>
@@ -145,8 +153,47 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
 
 </body>
+<script>
+var quantityInput = document.getElementsByClassName('quantity-input')[0];
+var minusBtn = document.getElementsByClassName('minus-btn')[0];
+var plusBtn = document.getElementsByClassName('plus-btn')[0];
+
+  minusBtn.addEventListener('click', function(e) {
+    e.preventDefault(); // Ngăn chặn trang web bị tải lại
+
+    var quantity = parseInt(quantityInput.textContent) || 0;
+    if (quantity > 0) {
+      quantityInput.textContent = quantity - 1;
+    }
+  });
+
+  plusBtn.addEventListener('click', function(e) {
+    e.preventDefault(); // Ngăn chặn trang web bị tải lại
+
+    var quantity = parseInt(quantityInput.textContent) || 0;
+    quantityInput.textContent = quantity + 1;
+  });
+
+  // Lấy tất cả các nút kích thước
+  var sizeButtons = document.querySelectorAll('.btn-shop-size');
+
+  // Lặp qua tất cả các nút và thêm sự kiện click
+  sizeButtons.forEach(function(button) {
+    button.addEventListener('click', function(e) {
+      e.preventDefault();
+      // Loại bỏ lớp "selected" cho tất cả các nút
+      sizeButtons.forEach(function(button) {
+        button.classList.remove('selected');
+      });
+
+      // Thêm lớp "selected" cho nút được nhấn
+      button.classList.add('selected');
+    });
+  });
+</script>
 
 </html>
+
 <?php
 include './footer.php';
 ?>
