@@ -10,30 +10,32 @@ if (isset($_POST['add_to_cart']) && isset($_POST['size']) && isset($_POST['quant
     $price = $_POST['price'];
     $total = $price * $quantity;
     $sql_productID = "SELECT *FROM order_details WHERE product_id = $product_id AND size=$size";
-    $result = mysqli_query($conn,$sql_productID);
+    $result = mysqli_query($conn, $sql_productID);
     $row_productID = mysqli_num_rows($result);
-    if($row_productID>0){
+    if ($row_productID > 0) {
         $row = mysqli_fetch_assoc($result);
         $new_quantity = $row['quantity'] + $quantity;
-        $new_total = $price*$new_quantity;
-        $sql_addCart ="UPDATE order_details SET quantity = $new_quantity ,total_money=$new_total WHERE product_id= $product_id AND size=$size";
+        $new_total = $price * $new_quantity;
+        $sql_addCart = "UPDATE order_details SET quantity = $new_quantity ,total_money=$new_total WHERE product_id= $product_id AND size=$size";
         mysqli_query($conn, $sql_addCart);
-
-    }
-    else{
-        $sql_addCart = "INSERT INTO order_details(product_id,price,size,quantity,total_money) VALUES ($product_id,$price,$size,$quantity,$total)";  
+    } else {
+        $sql_addCart = "INSERT INTO order_details(product_id,price,size,quantity,total_money) VALUES ($product_id,$price,$size,$quantity,$total)";
         mysqli_query($conn, $sql_addCart);
-
     }
-}
-else{
+} else {
     // header("Location: product_Infor.php");
 }
-$sql_product_order = "SELECT * FROM order_details JOIN products ON order_details.product_id = products.id";
+$sql_product_order = "SELECT order_details.id,order_details.product_id,order_details.price,order_details.quantity,order_details.total_money,order_details.size,
+products.thumbnail,products.title,products.decription
+FROM order_details JOIN products ON order_details.product_id = products.id";
 $result_order = mysqli_query($conn, $sql_product_order);
 $sql_total = "SELECT SUM(total_money) as total FROM order_details";
-$result_total = mysqli_query($conn,$sql_total);
+$result_total = mysqli_query($conn, $sql_total);
 $row_total = mysqli_fetch_assoc($result_total);
+
+// $sql_id_order = "SELECT * FROM order_details";
+// $result_id_order = mysqli_query($conn, $sql_id_order);
+
 ?>
 <!-- Xây dựng chức năng refresh khi cập nhật số lượng ở phần giỏ hàng -->
 
@@ -140,39 +142,37 @@ $row_total = mysqli_fetch_assoc($result_total);
                 </tr>
             </thead>
             <tbody>
-            <?php while ($row_order = mysqli_fetch_assoc($result_order)) :
-        ?>
-                <tr>
-              
-                   <form action="updateQuantity_Product.php" method="post">
-                        <td data-th="Product">
-                            <div class="row">
-                                <div class="col-sm-3 hidden-xs"><img src="../admin/img/<?php echo $row_order['thumbnail'] ?>" alt="..." class="img-responsive" width="100px" /></div>
-                                <div class="col-sm-9">
-                                    <h4 class="nomargin"><?php echo $row_order['title'] ?></h4>
-                                    <p><?php echo $row_order['decription'] ?></p>
+                <?php while ($row_order = mysqli_fetch_assoc($result_order)) :
+                ?>
+                        <form action="updateQuantity_Product.php" method="post">
+                            <td data-th="Product">
+                                <div class="row">
+                                    <div class="col-sm-3 hidden-xs"><img src="../admin/img/<?php echo $row_order['thumbnail'] ?>" alt="..." class="img-responsive" width="100px" /></div>
+                                    <div class="col-sm-9">
+                                        <h4 class="nomargin"><?php echo $row_order['title'] ?></h4>
+                                        <p><?php echo $row_order['decription'] ?></p>
+                                    </div>
                                 </div>
-                            </div>
-                        </td>
-                        <td data-th="Price"><?php echo number_format($row_order['price'], 0, ",", ".") . " VND" ?></td>
-                        <td><?php echo $row_order['size']?></td>
-                        <td data-th="Quantity">
-                            <input min="1" type="number" class="form-control text-center" value="<?php echo $row_order['quantity']?>" name="quantity">
-                        </td>
-                        <td data-th="Subtotal" class="text-center"><?php echo number_format($row_order['total_money'], 0, ",", ".") . " VND" ?></td>
-                        <td class="actions" data-th="">
-                           <a href=""> <button class="btn btn-info btn-sm"><i class="fa fa-refresh"></i></button></a>
-                           <a href=""> <button class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button></a>
-                        </td>
-                        <input type="hidden" name="id" value="<?php echo $row_order['id']?>">
-                        <input type="hidden" name="price" value="<?php echo $row_order['price']?>">
-                        <input type="hidden" name="size" value="<?php echo $row_order['size']?>">
-                        <input type="hidden" name="product_id" value="<?php echo $row_order['product_id']?>">
-                   </form>
-         
-                </tr>
+                            </td>
+                            <td data-th="Price"><?php echo number_format($row_order['price'], 0, ",", ".") . " VND" ?></td>
+                            <td><?php echo $row_order['size'] ?></td>
+                            <td data-th="Quantity">
+                                <input min="1" type="number" class="form-control text-center" value="<?php echo $row_order['quantity'] ?>" name="quantity">
+                            </td>
+                            <td data-th="Subtotal" class="text-center"><?php echo number_format($row_order['total_money'], 0, ",", ".") . " VND" ?></td>
+                            <td class="actions" data-th="">
+                                <a href=""> <button class="btn btn-info btn-sm"><i class="fa fa-refresh"></i></button></a>
+                                <input type="hidden" name="id" value="<?php echo $row_order['id'] ?>">
+                                <input type="hidden" name="price" value="<?php echo $row_order['price'] ?>">
+                                <input type="hidden" name="size" value="<?php echo $row_order['size'] ?>">
+                                <input type="hidden" name="product_id" value="<?php echo $row_order['product_id'] ?>">
+                        </form>
+                        <a href="delProduct_Cart.php?id_order=<?php echo $row_order['id'] ?>"> <button class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button></a>    
+                    </td>
+                 
+                    </tr>
                 <?php
-          endwhile;?>
+                endwhile; ?>
             </tbody>
             <tfoot>
                 <tr>
@@ -182,7 +182,7 @@ $row_total = mysqli_fetch_assoc($result_total);
                     <td><a href="#" class="btn btn-success btn-block">Checkout <i class="fa fa-angle-right"></i></a></td>
                 </tr>
             </tfoot>
-        
+
             <!-- <tbody>
                 <h4>Giỏ hàng rỗng</h4>                    
             </tbody>
@@ -200,10 +200,10 @@ $row_total = mysqli_fetch_assoc($result_total);
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
     <!-- Option 2: Separate Popper and Bootstrap JS -->
-    
+
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
-   
+
     <?php
     include '../FE/footer.php';
     ?>
