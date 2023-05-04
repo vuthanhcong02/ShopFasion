@@ -9,14 +9,14 @@ if (isset($_POST['add_to_cart']) && isset($_POST['size']) && isset($_POST['quant
     $quantity = $_POST['quantity'];
     $price = $_POST['price'];
     $total = $price * $quantity;
-    $sql_productID = "SELECT *FROM order_details WHERE product_id = $product_id";
+    $sql_productID = "SELECT *FROM order_details WHERE product_id = $product_id AND size=$size";
     $result = mysqli_query($conn,$sql_productID);
     $row_productID = mysqli_num_rows($result);
     if($row_productID>0){
         $row = mysqli_fetch_assoc($result);
         $new_quantity = $row['quantity'] + $quantity;
         $new_total = $price*$new_quantity;
-        $sql_addCart ="UPDATE order_details SET quantity = $new_quantity ,total_money=$new_total WHERE product_id= $product_id";
+        $sql_addCart ="UPDATE order_details SET quantity = $new_quantity ,total_money=$new_total WHERE product_id= $product_id AND size=$size";
         mysqli_query($conn, $sql_addCart);
 
     }
@@ -34,8 +34,9 @@ $result_order = mysqli_query($conn, $sql_product_order);
 $sql_total = "SELECT SUM(total_money) as total FROM order_details";
 $result_total = mysqli_query($conn,$sql_total);
 $row_total = mysqli_fetch_assoc($result_total);
-mysqli_close($conn);
 ?>
+<!-- Xây dựng chức năng refresh khi cập nhật số lượng ở phần giỏ hàng -->
+
 <!doctype html>
 <html lang="en">
 
@@ -143,25 +144,31 @@ mysqli_close($conn);
         ?>
                 <tr>
               
-                    <td data-th="Product">
-                        <div class="row">
-                            <div class="col-sm-3 hidden-xs"><img src="../admin/img/<?php echo $row_order['thumbnail'] ?>" alt="..." class="img-responsive" width="100px" /></div>
-                            <div class="col-sm-9">
-                                <h4 class="nomargin"><?php echo $row_order['title'] ?></h4>
-                                <p><?php echo $row_order['decription'] ?></p>
+                   <form action="updateQuantity_Product.php" method="post">
+                        <td data-th="Product">
+                            <div class="row">
+                                <div class="col-sm-3 hidden-xs"><img src="../admin/img/<?php echo $row_order['thumbnail'] ?>" alt="..." class="img-responsive" width="100px" /></div>
+                                <div class="col-sm-9">
+                                    <h4 class="nomargin"><?php echo $row_order['title'] ?></h4>
+                                    <p><?php echo $row_order['decription'] ?></p>
+                                </div>
                             </div>
-                        </div>
-                    </td>
-                    <td data-th="Price"><?php echo number_format($row_order['price'], 0, ",", ".") . " VND" ?></td>
-                    <td><?php echo $row_order['size']?></td>
-                    <td data-th="Quantity">
-                        <input type="number" class="form-control text-center" value="<?php echo $row_order['quantity']?>">
-                    </td>
-                    <td data-th="Subtotal" class="text-center"><?php echo number_format($row_order['total_money'], 0, ",", ".") . " VND" ?></td>
-                    <td class="actions" data-th="">
-                        <button class="btn btn-info btn-sm"><i class="fa fa-refresh"></i></button>
-                        <button class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>
-                    </td>
+                        </td>
+                        <td data-th="Price"><?php echo number_format($row_order['price'], 0, ",", ".") . " VND" ?></td>
+                        <td><?php echo $row_order['size']?></td>
+                        <td data-th="Quantity">
+                            <input min="1" type="number" class="form-control text-center" value="<?php echo $row_order['quantity']?>" name="quantity">
+                        </td>
+                        <td data-th="Subtotal" class="text-center"><?php echo number_format($row_order['total_money'], 0, ",", ".") . " VND" ?></td>
+                        <td class="actions" data-th="">
+                           <a href=""> <button class="btn btn-info btn-sm"><i class="fa fa-refresh"></i></button></a>
+                           <a href=""> <button class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button></a>
+                        </td>
+                        <input type="hidden" name="id" value="<?php echo $row_order['id']?>">
+                        <input type="hidden" name="price" value="<?php echo $row_order['price']?>">
+                        <input type="hidden" name="size" value="<?php echo $row_order['size']?>">
+                        <input type="hidden" name="product_id" value="<?php echo $row_order['product_id']?>">
+                   </form>
          
                 </tr>
                 <?php
