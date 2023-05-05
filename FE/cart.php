@@ -179,7 +179,7 @@ $row_total = mysqli_fetch_assoc($result_total);
                     <td><a href="../FE/product.php" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
                     <td colspan="3" class="hidden-xs"></td>
                     <td class="hidden-xs text-center"><strong><?php echo number_format($row_total['total'], 0, ",", ".") . " VND" ?></strong></td>
-                    <td><a href="#" class="btn btn-success btn-block">Checkout <i class="fa fa-angle-right"></i></a></td>
+                    <td><a href="checkout.php" class="btn btn-success btn-block">Checkout <i class="fa fa-angle-right"></i></a></td>
                 </tr>
             </tfoot>
 
