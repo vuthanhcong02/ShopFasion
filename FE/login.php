@@ -5,19 +5,76 @@ if ($_POST) {
     $error =[];
     $email = $_POST['email'];
     $password = $_POST['password'];
-    $result = mysqli_query($conn, "SELECT * from accounts where email='$email' and password='$password'");
+    $result = mysqli_query($conn, "SELECT id,email,password,fullname,role from accounts where email='$email' and password='$password'");
     $row = mysqli_fetch_assoc($result);
-    // var_dump($row);
-    // die;
+
+   
     if ($row) {
+        // $_SESSION['login'] = $row['role'];
+        // $_SESSION['fullname'] = $row['fullname'];
+        // $_SESSION['id'] = $row['id'];
+        // $_SESSION['email'] = $row['email'];
+
+        // $id_user  = $_SESSION['id'];
+        // $name_user = $_SESSION['fullname'];
+        // $email_user = $_SESSION['email'];
+    
+      
+
+        // if($_SESSION['user_id']==$_SESSION['id']){
+        //      header("Location: ../admin/index.php");
+        // }
+        // else{
+        //     $sql_user_order = "INSERT INTO orders(user_id,fullname,email) VALUES($id_user,'$name_user','$email_user')";
+        //     mysqli_query($conn,$sql_user_order);
+        // }
+        
+        // $sql_user_show = "SELECT id,user_id FROM orders WHERE user_id=$id_user";
+        // $result_show_order = mysqli_query($conn,$sql_user_show);
+        // $row_order_id = mysqli_fetch_assoc($result_show_order);
+        // $_SESSION['order_id'] = $row_order_id['id'];
+        // $_SESSION['user_id'] = $row_order_id['user_id'];
         $_SESSION['login'] = $row['role'];
         $_SESSION['fullname'] = $row['fullname'];
-        header("Location: ../admin/index.php");
+        $_SESSION['id'] = $row['id'];
+        $_SESSION['email'] = $row['email'];
+        
+        $id_user  = $_SESSION['id'];
+        // Kiểm tra xem đã có bản ghi cho user này trong bảng orders hay chưa
+        $sql_check = "SELECT COUNT(*) AS count FROM orders WHERE user_id = $id_user";
+        $result_check = mysqli_query($conn, $sql_check);
+        $count = mysqli_fetch_assoc($result_check)['count'];
+        
+        // Nếu chưa có bản ghi thì thêm mới vào bảng orders
+        if ($count == 0) {
+            $name_user = $_SESSION['fullname'];
+            $email_user = $_SESSION['email'];
+            $sql_user_order = "INSERT INTO orders(user_id, fullname, email) VALUES($id_user, '$name_user', '$email_user')";
+            mysqli_query($conn, $sql_user_order);
+            header("Location: ../admin/index.php");
+
+        }
+        else{
+            header("Location: ../admin/index.php");
+        }
+        
+        // Lấy id bản ghi của người dùng từ bảng orders
+        $sql_user_show = "SELECT id, user_id FROM orders WHERE user_id = $id_user";
+        $result_show_order = mysqli_query($conn, $sql_user_show);
+        $row_order_id = mysqli_fetch_assoc($result_show_order);
+        
+        // Lưu id bản ghi vào session
+        $_SESSION['order_id'] = $row_order_id['id'];
+        $_SESSION['user_id'] = $row_order_id['user_id'];
+        
+        
+        
         // header("Location: header.php");
     } else {
         $error['invalid']="Tên đăng nhập hoặc mật khẩu không đúng!";
     }
 }
+
 ?>
 
 <!DOCTYPE html>

@@ -5,14 +5,19 @@ include 'header.php';
 
 <?php
 require_once '../connectDB.php';
-$sql = "SELECT order_details.id,order_details.size,order_details.quantity,products.* FROM order_details JOIN products ON order_details.product_id = products.id ";
-$result = mysqli_query($conn,$sql);
+$sql = "SELECT order_details.id,order_details.size,order_details.quantity,products.thumbnail,products.price,products.title FROM order_details JOIN products ON order_details.product_id = products.id ";
+$result = mysqli_query($conn, $sql);
 $number_cart = mysqli_num_rows($result);
 $sql_total = "SELECT SUM(total_money) as total FROM order_details";
 $result_total = mysqli_query($conn, $sql_total);
 $row_total = mysqli_fetch_assoc($result_total);
+//
+
+$sql_id_order = "SELECT id FROM order_details";
+$result_id_order = mysqli_query($conn, $sql_id_order);
 
 ?>
+
 <!doctype html>
 <html lang="en">
 
@@ -43,7 +48,8 @@ $row_total = mysqli_fetch_assoc($result_total);
         color: black;
         font-weight: 600;
     }
-    .formcheckout{
+
+    .formcheckout {
         background: #E8F0F9;
     }
 </style>
@@ -54,52 +60,55 @@ $row_total = mysqli_fetch_assoc($result_total);
             <div class="col-5 order-md-last mt-3">
                 <h4 class="d-flex justify-content-between align-item-center">
                     <span class="text-muted">Your Cart</span>
-                    <span class="badge bg-secondary rounded-pill"><?php echo "$number_cart";?></span>
+
+                    <span class="badge bg-secondary rounded-pill"><?php echo "$number_cart"; ?></span>
                 </h4>
                 <ul class="list-group">
-                <?php while ($row = mysqli_fetch_assoc($result)) :
-                ?>  
-                    <li class="list-group-item d-flex justify-content-around">
-                        <img class=" mt-2" src="../admin/img/<?php echo $row['thumbnail']?>" width="100"/>
-                        <div class="mt-2">
-                            <h6><?php echo $row['title']?></h6>
-                            <span class="text-muted">Size: <?php echo $row['size']?></span><br>
-                        </div>
-                        <span class="text-muted mt-2">Đơn giá: <?php echo number_format($row['price'], 0, ",", ".") . " VND" ?></span>
-                        <span class="text-muted mt-2">x <?php echo $row['quantity']?></span>
-                    </li>
+                    <?php while ($row = mysqli_fetch_assoc($result)) :
+                    ?>
+
+                        <li class="list-group-item d-flex justify-content-around">
+                            <img class=" mt-2" src="../admin/img/<?php echo $row['thumbnail'] ?>" width="100" />
+                            <div class="mt-2">
+                                <h6><?php echo $row['title'] ?></h6>
+                                <span class="text-muted">Size: <?php echo $row['size'] ?></span><br>
+                            </div>
+                            <span class="text-muted mt-2">Đơn giá: <?php echo number_format($row['price'], 0, ",", ".") . " VND" ?></span>
+                            <span class="text-muted mt-2">x <?php echo $row['quantity'] ?></span>
+                        </li>
                     <?php
-                endwhile; ?>    
+                    endwhile; ?>
                     <li class="list-group-item d-flex justify-content-between">
                         <div>
                             <h6 class="mt-2">Total (Rs)</h6>
                         </div>
                         <span class="text-muted p-2"><?php echo number_format($row_total['total'], 0, ",", ".") . " VND" ?></span>
                     </li>
+
                 </ul>
 
             </div>
             <div class="col-7">
                 <h4>Billing Address</h4>
-                <form action="" method="post">
+                <form action="test.php" method="post">
                     <div class="row">
                         <div class="col-6">
-                            <label class="form-label" for="firstname">Full Name</label>
-                            <input type="text" id="firstname" class="form-control">
+                            <label class="form-label" for="fullname">Full Name</label>
+                            <input type="text" class="form-control" name="fullname">
                         </div>
                         <div class="col-6">
-                            <label class="form-label" for="lastname">Phone</label>
-                            <input type="text" id="lastname" class="form-control">
+                            <label class="form-label" for="phone">Phone</label>
+                            <input type="text" name="phone" class="form-control">
                         </div>
                         <div class="col-12">
                             <label class="form-label" for="email">Email
                                 <span class="text-muted"> (Optional)</span>
                             </label>
-                            <input type="text" id="email" class="form-control">
+                            <input type="text" name="email" class="form-control">
                         </div>
                         <div class="col-12">
                             <label class="form-label" for="address">Address </label>
-                            <input type="text" id="address" class="form-control">
+                            <input type="text" name="address" class="form-control">
                         </div>
                     </div>
                     <hr>

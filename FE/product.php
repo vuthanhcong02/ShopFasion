@@ -1,4 +1,5 @@
 <?php
+
 require_once '../connectDB.php';
 global $conn;
 $sql = "SELECT * FROM category";

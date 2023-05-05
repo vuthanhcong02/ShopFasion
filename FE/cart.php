@@ -19,17 +19,19 @@ if (isset($_POST['add_to_cart']) && isset($_POST['size']) && isset($_POST['quant
         $sql_addCart = "UPDATE order_details SET quantity = $new_quantity ,total_money=$new_total WHERE product_id= $product_id AND size=$size";
         mysqli_query($conn, $sql_addCart);
     } else {
-        $sql_addCart = "INSERT INTO order_details(product_id,price,size,quantity,total_money) VALUES ($product_id,$price,$size,$quantity,$total)";
+        $order_id = $_SESSION['order_id'];
+        $sql_addCart = "INSERT INTO order_details(product_id,order_id,price,size,quantity,total_money) VALUES ($product_id,$order_id,$price,$size,$quantity,$total)";
         mysqli_query($conn, $sql_addCart);
     }
 } else {
     // header("Location: product_Infor.php");
 }
+$order_id = $_SESSION['order_id'];
 $sql_product_order = "SELECT order_details.id,order_details.product_id,order_details.price,order_details.quantity,order_details.total_money,order_details.size,
 products.thumbnail,products.title,products.decription
-FROM order_details JOIN products ON order_details.product_id = products.id";
+FROM order_details JOIN products ON order_details.product_id = products.id WHERE order_id = $order_id";
 $result_order = mysqli_query($conn, $sql_product_order);
-$sql_total = "SELECT SUM(total_money) as total FROM order_details";
+$sql_total = "SELECT SUM(total_money) as total FROM order_details WHERE order_id = $order_id";
 $result_total = mysqli_query($conn, $sql_total);
 $row_total = mysqli_fetch_assoc($result_total);
 
@@ -37,6 +39,7 @@ $row_total = mysqli_fetch_assoc($result_total);
 // $result_id_order = mysqli_query($conn, $sql_id_order);
 
 ?>
+
 <!-- Xây dựng chức năng refresh khi cập nhật số lượng ở phần giỏ hàng -->
 
 <!doctype html>
