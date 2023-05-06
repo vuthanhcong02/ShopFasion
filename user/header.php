@@ -43,7 +43,7 @@ if (isset($_GET['category'])) {
 // $rowAcc = mysqli_fetch_assoc($resultAcc);
 // header("Location: header.php");
 // }
-// include '../FE/index.php'
+// include '../user/index.php'
 
 ?>
 <!doctype html>

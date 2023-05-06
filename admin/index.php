@@ -5,10 +5,10 @@ require_once '../connectDB.php';
 
 
 if(!$_SESSION['login']) {
-    header("Location:../FE/login.php");
+    header("Location:../user/login.php");
 }
 if($_SESSION['login'] && $_SESSION['login']!='admin') {
-    header("Location:../FE/index.php");
+    header("Location:../user/index.php");
 }
 ?>      
 <?php

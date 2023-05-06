@@ -171,7 +171,13 @@
           </div>
           <input type="hidden" value="<?php echo $row_Infor['id'] ?>" name="product_id">
           <input type="hidden" value="<?php echo $row_Infor['price'] ?>" name="price">
-          <button type="submit" class="btn-shop text-center" style="width: 100%; margin-left: 0;" name="add_to_cart">Thêm vào giỏ hàng</button>
+          <?php 
+          if(isset($_SESSION['login'])){?>
+            <button type="submit" class="btn-shop text-center" style="width: 100%; margin-left: 0;" name="add_to_cart">Thêm vào giỏ hàng</button>
+
+          <?php } else{ ?>
+           <a href="login.php" class="btn-shop text-center" style="width: 100%; margin-left: 0;">Đăng nhập để thêm vào giỏ hàng</></a>
+          <?php } ?>
         </div>
       </div>
     </form>

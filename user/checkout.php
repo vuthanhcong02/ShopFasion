@@ -92,15 +92,15 @@ $result_id_order = mysqli_query($conn, $sql_id_order);
 
             </div>
             <div class="col-7">
-                <h4>Billing Address</h4>
-                <form action="test.php" method="post">
+                <h4>Thông tin hóa đơn</h4>
+                <form action="payment_invoice.php" method="post">
                     <div class="row">
                         <div class="col-6">
-                            <label class="form-label" for="fullname">Full Name</label>
+                            <label class="form-label" for="fullname">Họ tên</label>
                             <input type="text" class="form-control" name="fullname" value="<?php echo "$fullname"?>">
                         </div>
                         <div class="col-6">
-                            <label class="form-label" for="phone">Phone</label>
+                            <label class="form-label" for="phone">Số điện thoại</label>
                             <input type="text" name="phone" class="form-control">
                         </div>
                         <div class="col-12">
@@ -110,7 +110,7 @@ $result_id_order = mysqli_query($conn, $sql_id_order);
                             <input type="text" name="email" class="form-control" value="<?php echo "$email"?>">
                         </div>
                         <div class="col-12">
-                            <label class="form-label" for="address">Address </label>
+                            <label class="form-label" for="address">Địa chỉ nhận hàng </label>
                             <input type="text" name="address" class="form-control">
                         </div>
                     </div>
@@ -120,36 +120,12 @@ $result_id_order = mysqli_query($conn, $sql_id_order);
                         <label class="form-check-label">Shipping address is the same as my billing address</label>
                     </div>
                     <hr>
-                    <h4>Payment</h4>
-                    <div class="form-check">
-                        <input type="radio" class="form-check-input">
-                        <label class="form-check-label">Credit Card</label>
-                    </div>
-                    <div class="form-check">
-                        <input type="radio" class="form-check-input">
-                        <label class="form-check-label">Debit Card</label>
-                    </div>
-                    <div class="row">
-                        <div class="col-6">
-                            <label class="form-label" for="cardname">Name on Card </label>
-                            <input type="text" id="cardname" class="form-control">
-                            <small class="text-muted">Full name as displayed on card</small>
-                        </div>
-                        <div class="col-6">
-                            <label class="form-label" for="creditcard">Credit Card Number </label>
-                            <input type="text" id="creditcard" class="form-control">
-                        </div>
-                        <div class="col-3">
-                            <label class="form-label" for="expiration">Expiration </label>
-                            <input type="text" id="expiration" class="form-control">
-                        </div>
-                        <div class="col-3">
-                            <label class="form-label" for="cvv">CVV </label>
-                            <input type="text" id="cvv" class="form-control">
-                        </div>
-                    </div>
-                    <hr>
-                    <button type="submit" class="btn btn-primary btn-block mb-4">Continue To Checkout</button>
+                    <?php if($number_cart==0) {?>
+                        <button type="submit" class="btn btn-primary btn-block mb-4" name="payment" disabled >Continue To Checkout</button>   
+                    <?php 
+                    } else{?>
+                        <button type="submit" class="btn btn-primary btn-block mb-4" name="payment">Continue To Checkout</button>   
+                    <?php }?>   
                 </form>
             </div>
         </div>

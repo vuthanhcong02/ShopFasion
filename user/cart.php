@@ -1,9 +1,10 @@
 <?php
-include '../FE/header.php';
+include '../user/header.php';
 ?>
 <?php
 require_once '../connectDB.php';
 if (isset($_POST['add_to_cart']) && isset($_POST['size']) && isset($_POST['quantity']) && isset($_POST['product_id']) && isset($_POST['price'])) {
+   if(isset($_SESSION['login'])){
     $product_id = $_POST['product_id'];
     $size = $_POST['size'];
     $quantity = $_POST['quantity'];
@@ -23,17 +24,20 @@ if (isset($_POST['add_to_cart']) && isset($_POST['size']) && isset($_POST['quant
         $sql_addCart = "INSERT INTO order_details(product_id,order_id,price,size,quantity,total_money) VALUES ($product_id,$order_id,$price,$size,$quantity,$total)";
         mysqli_query($conn, $sql_addCart);
     }
+   }
 } else {
     // header("Location: product_Infor.php");
 }
-$order_id = $_SESSION['order_id'];
-$sql_product_order = "SELECT order_details.id,order_details.product_id,order_details.price,order_details.quantity,order_details.total_money,order_details.size,
-products.thumbnail,products.title,products.decription
-FROM order_details JOIN products ON order_details.product_id = products.id WHERE order_id = $order_id";
-$result_order = mysqli_query($conn, $sql_product_order);
-$sql_total = "SELECT SUM(total_money) as total FROM order_details WHERE order_id = $order_id";
-$result_total = mysqli_query($conn, $sql_total);
-$row_total = mysqli_fetch_assoc($result_total);
+if(isset($_SESSION['login'])){
+    $order_id = $_SESSION['order_id'];
+    $sql_product_order = "SELECT order_details.id,order_details.product_id,order_details.price,order_details.quantity,order_details.total_money,order_details.size,
+    products.thumbnail,products.title,products.decription
+    FROM order_details JOIN products ON order_details.product_id = products.id WHERE order_id = $order_id";
+    $result_order = mysqli_query($conn, $sql_product_order);
+    $sql_total = "SELECT SUM(total_money) as total FROM order_details WHERE order_id = $order_id";
+    $result_total = mysqli_query($conn, $sql_total);
+    $row_total = mysqli_fetch_assoc($result_total);
+}
 
 // $sql_id_order = "SELECT * FROM order_details";
 // $result_id_order = mysqli_query($conn, $sql_id_order);
@@ -179,7 +183,7 @@ $row_total = mysqli_fetch_assoc($result_total);
             </tbody>
             <tfoot>
                 <tr>
-                    <td><a href="../FE/product.php" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
+                    <td><a href="../user/product.php" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
                     <td colspan="3" class="hidden-xs"></td>
                     <td class="hidden-xs text-center"><strong><?php echo number_format($row_total['total'], 0, ",", ".") . " VND" ?></strong></td>
                     <td><a href="checkout.php" class="btn btn-success btn-block">Checkout <i class="fa fa-angle-right"></i></a></td>
@@ -191,7 +195,7 @@ $row_total = mysqli_fetch_assoc($result_total);
             </tbody>
             <tfoot>
                 <tr>
-                    <td><a href="../FE/product.php" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
+                    <td><a href="../user/product.php" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
                     <td colspan="4" class="hidden-xs"></td>
                 </tr>
             </tfoot> -->
@@ -208,7 +212,7 @@ $row_total = mysqli_fetch_assoc($result_total);
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
 
     <?php
-    include '../FE/footer.php';
+    include '../user/footer.php';
     ?>
 </body>
 
