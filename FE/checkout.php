@@ -5,10 +5,13 @@ include 'header.php';
 
 <?php
 require_once '../connectDB.php';
-$sql = "SELECT order_details.id,order_details.size,order_details.quantity,products.thumbnail,products.price,products.title FROM order_details JOIN products ON order_details.product_id = products.id ";
+$order_id = $_SESSION['order_id'];
+$fullname = $_SESSION['fullname'];
+$email =$_SESSION['email'];
+$sql = "SELECT order_details.id,order_details.order_id,order_details.size,order_details.quantity,products.thumbnail,products.price,products.title FROM order_details JOIN products ON order_details.product_id = products.id WHERE order_id =$order_id";
 $result = mysqli_query($conn, $sql);
 $number_cart = mysqli_num_rows($result);
-$sql_total = "SELECT SUM(total_money) as total FROM order_details";
+$sql_total = "SELECT SUM(total_money) as total FROM order_details WHERE order_id =$order_id";
 $result_total = mysqli_query($conn, $sql_total);
 $row_total = mysqli_fetch_assoc($result_total);
 //
@@ -94,7 +97,7 @@ $result_id_order = mysqli_query($conn, $sql_id_order);
                     <div class="row">
                         <div class="col-6">
                             <label class="form-label" for="fullname">Full Name</label>
-                            <input type="text" class="form-control" name="fullname">
+                            <input type="text" class="form-control" name="fullname" value="<?php echo "$fullname"?>">
                         </div>
                         <div class="col-6">
                             <label class="form-label" for="phone">Phone</label>
@@ -104,7 +107,7 @@ $result_id_order = mysqli_query($conn, $sql_id_order);
                             <label class="form-label" for="email">Email
                                 <span class="text-muted"> (Optional)</span>
                             </label>
-                            <input type="text" name="email" class="form-control">
+                            <input type="text" name="email" class="form-control" value="<?php echo "$email"?>">
                         </div>
                         <div class="col-12">
                             <label class="form-label" for="address">Address </label>
